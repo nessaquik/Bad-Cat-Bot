@@ -13,10 +13,6 @@ const command = new SlashCommandBuilder()
         .setName('role')
         .setDescription('Role to be added for accepted application')
         .setRequired(true))
-    .addChannelOption(option =>option
-        .setName('channel')
-        .setDescription('Channel where applications should go')
-        .setRequired(true))
 
 async function execute(client: Client, interaction: ChatInputCommandInteraction) {
     const modal = CreateGameModal.getModal(client, interaction);
