@@ -16,33 +16,31 @@ const client = new DiscordJs.Client({
 
 client.on('ready', () => {
     console.log('The bot is ready')
-    client.application?.commands.set(Commands.map((value) => value.command))
+
+    const guildId = '1053562587024982017'
+    const guild = client.guilds.cache.get(guildId)
+    
+    if (guild) {
+        guild.commands.set(Commands.map((value) => value.command))
+    }
+    else{
+        client.application?.commands.set(Commands.map((value) => value.command))
+    }    
+    console.log('Commands are registered')
 })
 
 client.on('interactionCreate', async (interaction) => {
     if (interaction.isChatInputCommand()){
-        interaction.client.application.commands.set
-
         const slashCommand = Commands.find(c => c.command.name === interaction.commandName);
         if (!slashCommand) {
-            interaction.followUp({ content: "An error has occurred" });
+            interaction.followUp({ content: "An error has occurred. Blame Chava!" });
             return;
         }
         slashCommand.execute(client, interaction);
     }
     else{
         return
-    }
-
-    
-})
-
-client.on('messageCreate', (message) => {
-    if (message.content === 'ping'){
-        message.reply({
-            content: "pong",
-        })
-    }
+    }    
 })
 
 client.login(process.env.TOKEN)
