@@ -1,1 +1,4 @@
 # Formulate
+
+
+npm run dev
