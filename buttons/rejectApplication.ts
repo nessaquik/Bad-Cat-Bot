@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, ApplyToGameModalConstants } from "../constants/createGame";
+import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, ApplyToGameModalConstants, RejectApplicationButtonConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
 import { getGameDetails } from "../functions/applyToGame";
 import { AddModal } from "../modals/_modals";
@@ -9,9 +9,9 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
     const applyButton = new ActionRowBuilder<ButtonBuilder>()
     .addComponents(
         new ButtonBuilder()
-            .setCustomId(AcceptApplicationButtonConstants.ID + GlobalConstants.ID_SEPARATOR + id)
-            .setLabel(AcceptApplicationButtonConstants.TITLE)
-            .setStyle(ButtonStyle.Success)
+            .setCustomId(RejectApplicationButtonConstants.ID + GlobalConstants.ID_SEPARATOR + id)
+            .setLabel(RejectApplicationButtonConstants.TITLE)
+            .setStyle(ButtonStyle.Danger)
     );
     return applyButton
 }
@@ -36,21 +36,16 @@ async function execute(client: Client, interaction: Interaction) {
             });
         }
         else{            
-            var role = interaction.guild?.roles.cache.find(role => role.name === roleName)
-
-            
             var user = await client.users.fetch(userId);
-            var member = await interaction.guild?.members.fetch(user)
-            await member?.roles.add(role!)
-            user.send("Hey! Welcome to " + gameName)
-            await interaction.reply("Application Accepted - " + user.username );
+            user.send("Sorry, the DM decided to go with someone else for " + gameName)
+            await interaction.reply("Application Rejected - " + user.username );
         }
 
     }
 }
 
-export const AcceptApplication: Button = {
-    id: AcceptApplicationButtonConstants.ID,
+export const RejectApplication: Button = {
+    id: RejectApplicationButtonConstants.ID,
     getButton: getButton,
     execute: execute
 }

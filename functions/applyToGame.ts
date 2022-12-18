@@ -1,6 +1,6 @@
 import { APIEmbedField, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, TextChannel, ThreadAutoArchiveDuration, User } from "discord.js";
 import { AddButton } from "../buttons/_buttons";
-import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, CreateGameEmbedConstants, CreateGameThreadConstants, GameApplicationEmbedConstants } from "../constants/createGame";
+import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, CreateGameEmbedConstants, CreateGameThreadConstants, GameApplicationEmbedConstants, RejectApplicationButtonConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
 
 export async function getGameDetails(
@@ -30,7 +30,8 @@ export async function gameApplicationEmbed(user: User,
         .setTimestamp()
         .setFooter({ text: CreateGameEmbedConstants.FOOTER})
 
-    const button = AddButton(AcceptApplicationButtonConstants.ID, undefined, undefined, detailsId)
+    const acceptButton = AddButton(AcceptApplicationButtonConstants.ID, undefined, undefined, detailsId)
+    const rejectButton = AddButton(RejectApplicationButtonConstants.ID, undefined, undefined, detailsId)
 
-    await thread.send({ embeds: [embed], components: [button!] })
+    await thread.send({ embeds: [embed], components: [acceptButton!, rejectButton!] })
 }
