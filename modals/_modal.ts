@@ -3,6 +3,6 @@ import { Client, ChatInputCommandInteraction, ModalBuilder, Integration, CacheTy
 export interface Modal
 {
     id: string,
-    getModal: (client: Client, interaction: Interaction, id?: string) => ModalBuilder | null
+    getModal: (client: Client, interaction: Interaction, id?: string) => Promise<ModalBuilder | null>
     sumbitModal: (client:Client, interaction: Interaction) => void;
 }

@@ -39,9 +39,9 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
             new ActionRowBuilder().addComponents(gameTemplate) as ActionRowBuilder<TextInputBuilder>,
             new ActionRowBuilder().addComponents(applicationQuestion) as ActionRowBuilder<TextInputBuilder>]
         modal.addComponents(rows)
-        return modal
+        return Promise.resolve(modal)
     }
-    return null
+    return Promise.resolve(null)
 }
 
 async function SubmitModal(client: Client, interaction: Interaction) {

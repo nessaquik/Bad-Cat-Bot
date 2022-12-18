@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
-import { ApplyGameButtonConstants } from "../constants/createGame";
+import { ApplyGameButtonConstants, ApplyToGameModalConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
-import { PingConstants } from "../constants/ping";
+import { AddModal } from "../modals/_modals";
 import { Button } from "./_button";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
@@ -17,7 +17,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
-        await interaction.reply(interaction.customId);
+        await AddModal(client, interaction, ApplyToGameModalConstants.ID, interaction.user.id)
     }
 }
 

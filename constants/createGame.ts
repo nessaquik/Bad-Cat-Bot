@@ -38,3 +38,16 @@ export abstract class CreateGameModalConstants{
     static readonly QUESTIONS_ID = 'gameQuestions';
     static readonly QUESTIONS_LABEL = 'Player Application'
 }
+
+export abstract class ApplyToGameModalConstants{
+    static readonly ID = "apply-to-game-modal"
+    static readonly MODAL_TITLE = 'Apply to '
+    static readonly REPLY = 'You have successfully applied to this game!'
+}
+
+export abstract class GameApplicationEmbedConstants{
+    static readonly EMBED_COLOR = "#B4CEA7"
+    static readonly FOOTER = 'Chief of Operations, at your service!'
+    static readonly TITLE = 'New Application for '
+    static readonly DESC = 'Sumbitted by '
+}
