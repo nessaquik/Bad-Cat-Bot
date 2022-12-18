@@ -26,6 +26,10 @@ export abstract class ApplyGameButtonConstants{
     static readonly TITLE = "Apply to this game"
 }
 
+export abstract class AcceptApplicationButtonConstants{
+    static readonly ID = "accept-application"
+    static readonly TITLE = "Accept"
+}
 export abstract class CreateGameModalConstants{
     static readonly ID = "create-game"
     static readonly MODAL_TITLE = 'Create a new game'

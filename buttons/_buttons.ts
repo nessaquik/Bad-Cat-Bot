@@ -1,9 +1,11 @@
 import { Client, ChatInputCommandInteraction, Interaction } from "discord.js";
+import { AcceptApplication } from "./acceptApplication";
 import { ApplyGame } from "./applyGame";
 import { Button } from "./_button"
 
 export const Buttons = new Map<string, Button>()
 Buttons.set(ApplyGame.id, ApplyGame)
+Buttons.set(AcceptApplication.id, AcceptApplication)
 
 export function AddButton(buttonId: string,
     client?: Client, 

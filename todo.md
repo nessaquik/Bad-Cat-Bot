@@ -4,11 +4,11 @@
 3. Optional variables
 
 
-4. Create Apply modal
-5. Sumbit Apply modal to create embeds
-6. Create Accept and Reject Buttons
-7. Permissioning on Accept and Reject Buttons
-8. Add roles on accept
+4. Create Accept and Reject Buttons
+5. Permissioning on Accept and Reject Buttons
+6. Add roles on accept
 
 
 interaction.id vs interaction.customid
+
+NEED TO REMOVE THE DUPLICATE CALL IN MODAL - BAD DESIGN!

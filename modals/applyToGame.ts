@@ -70,8 +70,12 @@ async function SubmitModal(client: Client, interaction: Interaction) {
                     }) 
                 })
 
-
-                await gameApplicationEmbed(interaction.user, thread, game.gameName, answers)
+                await gameApplicationEmbed(
+                    interaction.user, 
+                    thread, 
+                    game.gameName, 
+                    answers, 
+                    [interaction.user.id ,message.id].join(GlobalConstants.ID_SEPARATOR))
                 
                 if (!submitted.replied) {
                     await submitted.reply({
