@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, ApplyToGameModalConstants, RejectApplicationButtonConstants } from "../constants/createGame";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
-import { getGameDetails } from "../functions/applyToGame";
+import { GameDetails, getGameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
 import { AddModal } from "../modals/_modals";
 import { Button } from "./_button";
 
@@ -19,28 +19,22 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
         const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-
         const userId = ids[1]
         const messageId = ids[2]
-        const message = await interaction.channel?.messages.fetch(messageId)
-
-        var values = message?.content.split('\n')
-        var gameName = values?.shift() || ''
-        var dm= values?.shift() || ''
-        var roleName= values?.shift() || ''
-
-        if (interaction.user.id != dm){
+        
+        var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
+        
+        if (interaction.user.id != game.dm){
             await interaction.reply({
-                content: "AYO! You are SO NOT the DM!",
+                content: RejectApplicationButtonConstants.PERMISSION,
                 ephemeral: true
             });
         }
         else{            
             var user = await client.users.fetch(userId);
-            user.send("Sorry, the DM decided to go with someone else for " + gameName)
-            await interaction.reply("Application Rejected - " + user.username );
+            user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
+            await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM + user.username );
         }
-
     }
 }
 

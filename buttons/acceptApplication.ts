@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, ApplyToGameModalConstants } from "../constants/createGame";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
-import { getGameDetails } from "../functions/applyToGame";
+import { GameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
 import { AddModal } from "../modals/_modals";
 import { Button } from "./_button";
 
@@ -19,33 +19,26 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
         const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-
         const userId = ids[1]
         const messageId = ids[2]
-        const message = await interaction.channel?.messages.fetch(messageId)
+        
+        var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
 
-        var values = message?.content.split('\n')
-        var gameName = values?.shift() || ''
-        var dm= values?.shift() || ''
-        var roleName= values?.shift() || ''
-
-        if (interaction.user.id != dm){
+        if (interaction.user.id != game.dm){
             await interaction.reply({
-                content: "AYO! You are SO NOT the DM!",
+                content: AcceptApplicationButtonConstants.PERMISSION,
                 ephemeral: true
             });
         }
         else{            
-            var role = interaction.guild?.roles.cache.find(role => role.name === roleName)
-
-            
+            var role = interaction.guild?.roles.cache.find(role => role.name === game.role)
             var user = await client.users.fetch(userId);
             var member = await interaction.guild?.members.fetch(user)
-            await member?.roles.add(role!)
-            user.send("Hey! Welcome to " + gameName)
-            await interaction.reply("Application Accepted - " + user.username );
-        }
 
+            await member?.roles.add(role!)
+            user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
+            await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
+        }
     }
 }
 

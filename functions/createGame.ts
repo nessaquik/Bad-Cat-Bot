@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { AddButton } from "../buttons/_buttons";
-import { ApplyGameButtonConstants, CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
+import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 
 export async function createDiscussionThread(channel: TextChannel,

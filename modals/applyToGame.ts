@@ -1,30 +1,26 @@
 import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, APIEmbedField } from "discord.js";
-import { ApplyToGameModalConstants, CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
+import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
+import { ApplyToGameModalConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
-import { gameApplicationEmbed, getGameDetails } from "../functions/applyToGame";
+import { gameApplicationEmbed } from "../functions/applyToGame";
 import { createDiscussionThread, createApplicationThread, sendGameEmbed } from "../functions/createGame";
+import { getGameDetails, GameDetails } from "../functions/gameDetails";
 import { Modal } from "./_modal";
 
 async function GetModal(client: Client, interaction: Interaction, id?: string) {
     if (interaction.isButton()){
-
-        let {thread, message} = await getGameDetails(client, interaction.customId)
-        var values = message.content.split('\n')
-        var game: GameDetails = {
-            gameName: values.shift() || '',
-            dm: values.shift() || '',
-            role: values.shift() || '',
-            questions: values,
-            thread: thread
-        }
+        const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+        const threadId = ids[1]
+        const messageId = ids[2]
+        var game: GameDetails = await getGameDetails(client, threadId, messageId)
 
         const modal = new ModalBuilder()
             .setCustomId(ApplyToGameModalConstants.ID + GlobalConstants.ID_SEPARATOR + id)
             .setTitle(ApplyToGameModalConstants.MODAL_TITLE + game.gameName)
 
         const rows: ActionRowBuilder<TextInputBuilder>[] = []
-        values.forEach((value) => {
+        game.questions.forEach((value) => {
             var textVal = new TextInputBuilder()
                 .setCustomId(value.replace(/[^a-zA-Z]/g, ""))
                 .setLabel(value)
@@ -51,16 +47,11 @@ async function SubmitModal(client: Client, interaction: Interaction) {
         })
         if (submitted) {
             try {
-                //TODO: REDUNDANT CALLS - REDUCE IMMEDIATELY!!!                
-                let {thread, message} = await getGameDetails(client, interaction.customId)
-                var values = message.content.split('\n')
-                var game: GameDetails = {
-                    gameName: values.shift() || '',
-                    dm: values.shift() || '',
-                    role: values.shift() || '',
-                    questions: values,
-                    thread: thread
-                }
+                //TODO: REDUNDANT CALLS - REDUCE IMMEDIATELY!!!    
+                const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+                const threadId = ids[1]
+                const messageId = ids[2]            
+                var game: GameDetails = await getGameDetails(client, threadId, messageId)
 
                 var answers: APIEmbedField[] = []    
                 game.questions.forEach((value) => {
@@ -72,10 +63,10 @@ async function SubmitModal(client: Client, interaction: Interaction) {
 
                 await gameApplicationEmbed(
                     interaction.user, 
-                    thread, 
+                    game.thread!, 
                     game.gameName, 
                     answers, 
-                    [interaction.user.id ,message.id].join(GlobalConstants.ID_SEPARATOR))
+                    [interaction.user.id, game.messageId].join(GlobalConstants.ID_SEPARATOR))
                 
                 if (!submitted.replied) {
                     await submitted.reply({
@@ -102,14 +93,6 @@ async function SubmitModal(client: Client, interaction: Interaction) {
             }
         }
     }
-}
-
-interface GameDetails {
-    gameName: string;
-    dm: string;
-    role: string;
-    questions: string[];
-    thread: TextChannel;
 }
 
 export const ApplyToGame: Modal = {

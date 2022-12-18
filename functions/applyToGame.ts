@@ -1,23 +1,11 @@
-import { APIEmbedField, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, TextChannel, ThreadAutoArchiveDuration, User } from "discord.js";
+import { APIEmbedField, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, TextBasedChannel, TextChannel, ThreadAutoArchiveDuration, User } from "discord.js";
 import { AddButton } from "../buttons/_buttons";
-import { AcceptApplicationButtonConstants, ApplyGameButtonConstants, CreateGameEmbedConstants, CreateGameThreadConstants, GameApplicationEmbedConstants, RejectApplicationButtonConstants } from "../constants/createGame";
+import {  CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 
-export async function getGameDetails(
-    client: Client, 
-    id: string) {
-    const ids = id.split(GlobalConstants.ID_SEPARATOR)
-
-    const threadId = ids[1]
-    const messageId = ids[2]
-    const thread = await client.channels.fetch(threadId) as TextChannel
-    const message = await thread.messages.fetch(messageId)
-
-    return {thread, message}
-}
-
 export async function gameApplicationEmbed(user: User,
-    thread: TextChannel,
+    thread: TextBasedChannel,
     gameName: string,
     answers: APIEmbedField[],
     detailsId: string) {

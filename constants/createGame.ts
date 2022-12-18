@@ -21,20 +21,6 @@ export abstract class CreateGameEmbedConstants{
     static readonly APPLICATION = "Application"
 }
 
-export abstract class ApplyGameButtonConstants{
-    static readonly ID = "apply-to-game"
-    static readonly TITLE = "Apply to this game"
-}
-
-export abstract class AcceptApplicationButtonConstants{
-    static readonly ID = "accept-application"
-    static readonly TITLE = "Accept"
-}
-
-export abstract class RejectApplicationButtonConstants{
-    static readonly ID = "reject-application"
-    static readonly TITLE = "Reject"
-}
 
 export abstract class CreateGameModalConstants{
     static readonly ID = "create-game"
@@ -47,17 +33,4 @@ export abstract class CreateGameModalConstants{
     static readonly TEMPLATE_LABEL = 'Fill out this template'   
     static readonly QUESTIONS_ID = 'gameQuestions';
     static readonly QUESTIONS_LABEL = 'Player Application'
-}
-
-export abstract class ApplyToGameModalConstants{
-    static readonly ID = "apply-to-game-modal"
-    static readonly MODAL_TITLE = 'Apply to '
-    static readonly REPLY = 'You have successfully applied to this game!'
-}
-
-export abstract class GameApplicationEmbedConstants{
-    static readonly EMBED_COLOR = "#B4CEA7"
-    static readonly FOOTER = 'Chief of Operations, at your service!'
-    static readonly TITLE = 'New Application for '
-    static readonly DESC = 'Sumbitted by '
 }

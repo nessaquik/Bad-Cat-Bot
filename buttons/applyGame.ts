@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
-import { ApplyGameButtonConstants, ApplyToGameModalConstants } from "../constants/createGame";
+import { ApplyGameButtonConstants, ApplyToGameModalConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import { AddModal } from "../modals/_modals";
 import { Button } from "./_button";
