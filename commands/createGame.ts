@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Client, CommandInteraction, ChatInputCommandInteraction, ModalBuilder, SlashCommandBuilder, SlashCommandUserOption, TextInputBuilder, TextInputStyle } from "discord.js";
+import { ActionRowBuilder, Client, CommandInteraction, ChatInputCommandInteraction, ModalBuilder, SlashCommandBuilder, SlashCommandUserOption, TextInputBuilder, TextInputStyle, PermissionFlagsBits } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { AddModal, Modals } from "../modals/_modals";
 import { Command } from "./_command";
@@ -21,7 +21,9 @@ const command = new SlashCommandBuilder()
         .addChoices(
             { name: CreateGameConstants.PRIVACY_OPTION_PUBLIC, value: CreateGameConstants.PRIVACY_OPTION_PUBLIC },
             { name: CreateGameConstants.PRIVACY_OPTION_PRIVATE, value: CreateGameConstants.PRIVACY_OPTION_PRIVATE },
-        ));
+        ))
+    .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
+    .setDMPermission(false);
 
 async function execute(client: Client, interaction: ChatInputCommandInteraction) {
     await AddModal(client, interaction, CreateGameModalConstants.ID, interaction.id)
