@@ -1,13 +1,12 @@
-import { ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, TextChannel, ThreadAutoArchiveDuration } from "discord.js";
+import { APIEmbedField, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, TextChannel, ThreadAutoArchiveDuration, User } from "discord.js";
 import { AddButton } from "../buttons/_buttons";
 import { ApplyGameButtonConstants, CreateGameEmbedConstants, CreateGameThreadConstants, GameApplicationEmbedConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
 
-
 export async function getGameDetails(
     client: Client, 
-    interaction: ButtonInteraction) {
-    const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+    id: string) {
+    const ids = id.split(GlobalConstants.ID_SEPARATOR)
 
     const threadId = ids[1]
     const messageId = ids[2]
@@ -17,33 +16,16 @@ export async function getGameDetails(
     return {thread, message}
 }
 
-export async function getGameMessage(
-    client: Client, 
-    interaction: ButtonInteraction) {
-    let {thread, message} = await getGameDetails(client, interaction)
-    return message.content.split('\n')
-}
-
-export async function gameApplicationEmbed(client: Client, 
-    interaction: ButtonInteraction,
-    submitted: ModalSubmitInteraction) {
-
-    //TODO: REDUNDANT CALLS - REDUCE IMMEDIATELY!!!
-    let {thread, message} = await getGameDetails(client, interaction)
-    var values = message.content.split('\n')
-    const gameName = values.shift()
-    const dm = values.shift()
-    const role = values.shift()
-
+export async function gameApplicationEmbed(user: User,
+    thread: TextChannel,
+    gameName: string,
+    answers: APIEmbedField[]) {
     const embed = new EmbedBuilder()
         .setTitle(GameApplicationEmbedConstants.TITLE + gameName)
+        .setThumbnail(user.avatarURL())
         .setColor(GameApplicationEmbedConstants.EMBED_COLOR)
-        .setDescription(GameApplicationEmbedConstants.DESC + interaction.user.toString())
-        // .addFields(
-        //     { name: CreateGameEmbedConstants.DM, value: dm },
-        //     { name: CreateGameEmbedConstants.GAME_DETAILS, value: template },
-        //     { name: CreateGameEmbedConstants.APPLICATION, value: questions },
-        // )
+        .setDescription(GameApplicationEmbedConstants.DESC + user.toString())
+        .addFields(answers)
         .setTimestamp()
         .setFooter({ text: CreateGameEmbedConstants.FOOTER})
 
