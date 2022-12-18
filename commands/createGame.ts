@@ -1,26 +1,26 @@
 import { ActionRowBuilder, Client, CommandInteraction, ChatInputCommandInteraction, ModalBuilder, SlashCommandBuilder, SlashCommandUserOption, TextInputBuilder, TextInputStyle } from "discord.js";
-import { CreateGame as CreateGameModal } from "../modals/createGameModal";
+import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
+import { AddModal, Modals } from "../modals/_modals";
 import { Command } from "./_command";
 
 const command = new SlashCommandBuilder()
-    .setName('creategame')
-    .setDescription('Create a new game')
+    .setName(CreateGameConstants.COMMAND_NAME)
+    .setDescription(CreateGameConstants.COMMAND_DESC)
     .addUserOption(option =>option
-        .setName('dm')
-        .setDescription('DM for the game')
+        .setName(CreateGameConstants.DM_OPTION)
+        .setDescription(CreateGameConstants.DM_DESC)
         .setRequired(true))
     .addRoleOption(option =>option
-        .setName('role')
-        .setDescription('Role to be added for accepted application')
+        .setName(CreateGameConstants.ROLE_OPTION)
+        .setDescription(CreateGameConstants.ROLE_DESC)
         .setRequired(true))
 
 async function execute(client: Client, interaction: ChatInputCommandInteraction) {
-    const modal = CreateGameModal.getModal(client, interaction);
-    await interaction.showModal(modal);    
-    await CreateGameModal.sumbitModal(client, interaction)    
+    await AddModal(client, interaction, CreateGameModalConstants.ID, interaction.id)
 }
 
 export const CreateGame: Command = {
+    id: CreateGameConstants.COMMAND_NAME,
     command: command.toJSON(),
     execute: execute
 }

@@ -2,6 +2,7 @@ import { SlashCommandBuilder, Client, CommandInteraction, ChatInputApplicationCo
 
 export interface Command
 {
+    id: string,
     command: RESTPostAPIChatInputApplicationCommandsJSONBody,
     execute: (client:Client, interaction: ChatInputCommandInteraction) => void;
 }
