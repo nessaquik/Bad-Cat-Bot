@@ -10,6 +10,8 @@ export abstract class AcceptApplicationButtonConstants{
     static readonly PERMISSION = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE_DM = "Application Accepted - "
     static readonly MESSAGE_PERSONAL = "Hey! Welcome to "
+    static readonly STATUS_ID = "Status"
+    static readonly STATUS_MESSAGE = "You have Accepted this application"
 }
 
 export abstract class RejectApplicationButtonConstants{
@@ -18,6 +20,8 @@ export abstract class RejectApplicationButtonConstants{
     static readonly PERMISSION = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE_DM = "Application Rejected - "
     static readonly MESSAGE_PERSONAL = "Sorry, the DM decided to go with someone else for "
+    static readonly STATUS_ID = "Status"
+    static readonly STATUS_MESSAGE = "You have Rejected this application"
 }
 
 export abstract class ApplyToGameModalConstants{

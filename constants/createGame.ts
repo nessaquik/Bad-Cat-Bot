@@ -5,6 +5,10 @@ export abstract class CreateGameConstants {
     static readonly DM_DESC = 'DM for the game'
     static readonly ROLE_OPTION = 'role';
     static readonly ROLE_DESC = 'Role to be added for accepted application'
+    static readonly PRIVACY_OPTION = 'visbility';
+    static readonly PRIVACY_DESC = 'Should the applications be publicaly visible'
+    static readonly PRIVACY_OPTION_PUBLIC = 'public';
+    static readonly PRIVACY_OPTION_PRIVATE = 'private';
     static readonly REPLY = 'The game was successfully created!'
 }
 

@@ -35,7 +35,7 @@ async function getGameDetailsHelper(thread: TextBasedChannel, messageId: string)
         gameName: values.shift() || '',
         dm: values.shift() || '',
         role: values.shift() || '',
-        questions: values,
+        questions: values.slice(0,5),
         messageId: messageId,
         threadId: thread.id,
         thread: thread,

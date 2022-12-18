@@ -3,6 +3,6 @@ import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ChatInputCommandInt
 export interface Button
 {
     id: string,
-    getButton: (client?: Client, interaction?: Interaction, id?: string) => ActionRowBuilder<ButtonBuilder>
+    getButton: (client?: Client, interaction?: Interaction, id?: string) => ButtonBuilder
     execute: (client:Client, interaction: ButtonInteraction) => void;
 }

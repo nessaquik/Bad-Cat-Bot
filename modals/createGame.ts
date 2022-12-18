@@ -66,11 +66,12 @@ async function SubmitModal(client: Client, interaction: Interaction) {
                 const dmId: string = dm?.id || ''
                 const dmEmbed: string = dm?.toString() || ''
                 const role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
+                const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
 
                 var channel = interaction.channel as TextChannel
 
                 await createDiscussionThread(channel, name, dmId)
-                const id = await createApplicationThread(channel, name, dmId, role, questions)
+                const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id)
 
                 if (!submitted.replied) {

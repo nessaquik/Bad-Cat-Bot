@@ -14,6 +14,14 @@ const command = new SlashCommandBuilder()
         .setName(CreateGameConstants.ROLE_OPTION)
         .setDescription(CreateGameConstants.ROLE_DESC)
         .setRequired(true))
+    .addStringOption(option =>option
+        .setName(CreateGameConstants.PRIVACY_OPTION)
+        .setDescription(CreateGameConstants.PRIVACY_DESC)
+        .setRequired(true)
+        .addChoices(
+            { name: CreateGameConstants.PRIVACY_OPTION_PUBLIC, value: CreateGameConstants.PRIVACY_OPTION_PUBLIC },
+            { name: CreateGameConstants.PRIVACY_OPTION_PRIVATE, value: CreateGameConstants.PRIVACY_OPTION_PRIVATE },
+        ));
 
 async function execute(client: Client, interaction: ChatInputCommandInteraction) {
     await AddModal(client, interaction, CreateGameModalConstants.ID, interaction.id)

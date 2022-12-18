@@ -17,14 +17,15 @@ export async function createApplicationThread(channel: TextChannel,
     gameName: string,
     dm: string,
     role: string,
-    questions: string) {
+    questions: string,
+    ispublic: boolean) {
     const thread = await channel?.threads.create({
         name: CreateGameThreadConstants.APPLICATION_THREAD_NAME + gameName,
-        type: ChannelType.PrivateThread,
+        type: ispublic ? ChannelType.PublicThread : ChannelType.PrivateThread,
     })
     await thread.members.add(dm);
 
-    //This is read in getGameValues. Don't modify without changing that function
+    //NOTE: This is read in getGameValues. Don't modify without changing that function
     //This is just a cheap ass way of saving DB money
     var message = await thread.send([gameName, dm, role, questions].join('\n'))
     return [thread.id, message.id].join(GlobalConstants.ID_SEPARATOR)
@@ -51,7 +52,8 @@ export async function sendGameEmbed(channel: TextChannel,
         .setTimestamp()
         .setFooter({ text: CreateGameEmbedConstants.FOOTER})
 
-    const button = AddButton(ApplyGameButtonConstants.ID, undefined, undefined, detailsId)
+    var applyButton = AddButton(ApplyGameButtonConstants.ID, undefined, undefined, detailsId)
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents([applyButton!]);
 
-    await channel.send({ embeds: [embed], components: [button!] })
+    await channel.send({ embeds: [embed], components: [row!] })
 }
