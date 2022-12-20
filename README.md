@@ -2,6 +2,8 @@
 
 Hello and Welcome! This is my first attempt at making a discord bot. The aim was mostly to learn, but also to deliver a specific experience for a particular server. It was a fantastic adventure and made me learn so much about hosting.
 
+This is licensed under GPL, use it for anything you want, but please don’t republish, redistribute, or resell this bot itself.
+
 ## Getting Started
 
 If it's your first time coding a discord bot, I can't recommend [this youtube series](https://www.youtube.com/playlist?list=PLaxxQQak6D_f4Z5DtQo0b1McgjLVHmE8Q) highly enough!
