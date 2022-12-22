@@ -1,5 +1,6 @@
 import { ActionRowBuilder, Client, CommandInteraction, ChatInputCommandInteraction, ModalBuilder, SlashCommandBuilder, SlashCommandUserOption, TextInputBuilder, TextInputStyle, PermissionFlagsBits } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
+import { GlobalConstants } from "../constants/global";
 import { AddModal, Modals } from "../modals/_modals";
 import { Command } from "./_command";
 
@@ -22,7 +23,7 @@ const command = new SlashCommandBuilder()
             { name: CreateGameConstants.PRIVACY_OPTION_PUBLIC, value: CreateGameConstants.PRIVACY_OPTION_PUBLIC },
             { name: CreateGameConstants.PRIVACY_OPTION_PRIVATE, value: CreateGameConstants.PRIVACY_OPTION_PRIVATE },
         ))
-    .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
+    .setDefaultMemberPermissions(GlobalConstants.Permissions)
     .setDMPermission(false);
 
 async function execute(client: Client, interaction: ChatInputCommandInteraction) {

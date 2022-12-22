@@ -4,9 +4,9 @@ export abstract class ApplyGameButtonConstants{
     static readonly TITLE = "Apply to this game"
 }
 
-export abstract class ApplyingToGameButtonConstants{
-    static readonly ID = "applying-to-game"
-    static readonly TITLE = "Applying to this game"
+export abstract class EditGameButtonConstants{
+    static readonly ID = "edit-game"
+    static readonly TITLE = "Edit this game"
 }
 
 export abstract class AcceptApplicationButtonConstants{

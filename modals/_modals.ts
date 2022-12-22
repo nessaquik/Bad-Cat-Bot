@@ -1,11 +1,13 @@
 import { Client, ChatInputCommandInteraction, Interaction } from "discord.js"
 import { ApplyToGame } from "./applyToGame"
 import { CreateGame } from "./createGame"
+import { EditGame } from "./editGame"
 import { Modal } from "./_modal"
 
 export const Modals = new Map<string, Modal>()
 Modals.set(CreateGame.id, CreateGame)
 Modals.set(ApplyToGame.id, ApplyToGame)
+Modals.set(EditGame.id, EditGame)
 
 export async function AddModal(client: Client, 
     interaction: Interaction,

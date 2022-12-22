@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message } from "discord.js";
 import { AddButton } from "../buttons/_buttons";
 import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 
 export async function createDiscussionThread(channel: TextChannel,
@@ -53,7 +53,38 @@ export async function sendGameEmbed(channel: TextChannel,
         .setFooter({ text: CreateGameEmbedConstants.FOOTER})
 
     var applyButton = AddButton(ApplyGameButtonConstants.ID, undefined, undefined, detailsId)
-    const row = new ActionRowBuilder<ButtonBuilder>().addComponents([applyButton!]);
+    var editButton = AddButton(EditGameButtonConstants.ID, undefined, undefined, detailsId)
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents([applyButton!, editButton!]);
 
     await channel.send({ embeds: [embed], components: [row!] })
+}
+
+export async function editGameEmbed(message: Message,
+    gameName: string,
+    desc: string,
+    template: string,
+    questions: string,
+    dm: string
+) {
+    const embed= new EmbedBuilder()
+        .setTitle(gameName)
+        .setColor(CreateGameEmbedConstants.EMBED_COLOR)
+        .setDescription(desc)
+        .setThumbnail(GlobalConstants.THUMBNAIL)
+        .addFields(
+            { name: CreateGameEmbedConstants.DM, value: dm },
+            { name: CreateGameEmbedConstants.GAME_DETAILS, value: template },
+            { name: CreateGameEmbedConstants.APPLICATION, value: questions },
+        )
+        .setTimestamp()
+        .setFooter({ text: CreateGameEmbedConstants.FOOTER})
+
+    await message.edit({embeds: [embed]})
+}
+
+export function getGameEmbed(message: Message) {
+    const embed = message.embeds[0]
+    var retVal = [embed.title!, embed.description!]
+    embed.fields.forEach((value) => retVal.push(value.value))
+    return retVal
 }

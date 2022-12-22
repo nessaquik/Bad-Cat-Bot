@@ -38,3 +38,10 @@ export abstract class CreateGameModalConstants{
     static readonly QUESTIONS_ID = 'gameQuestions';
     static readonly QUESTIONS_LABEL = 'Player Application'
 }
+
+export abstract class EditGameModalConstants{
+    static readonly ID = "edit-game"
+    static readonly MODAL_TITLE = 'Edit game details'
+    static readonly REPLY = 'The game was successfully edited!'
+    static readonly PERMISSIONS = 'Only the admins can edit a posted game.'
+}
