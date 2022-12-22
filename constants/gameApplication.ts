@@ -4,6 +4,11 @@ export abstract class ApplyGameButtonConstants{
     static readonly TITLE = "Apply to this game"
 }
 
+export abstract class ApplyingToGameButtonConstants{
+    static readonly ID = "applying-to-game"
+    static readonly TITLE = "Applying to this game"
+}
+
 export abstract class AcceptApplicationButtonConstants{
     static readonly ID = "accept-application"
     static readonly TITLE = "Accept"
@@ -27,7 +32,8 @@ export abstract class RejectApplicationButtonConstants{
 export abstract class ApplyToGameModalConstants{
     static readonly ID = "apply-to-game-modal"
     static readonly MODAL_TITLE = 'Apply to '
-    static readonly REPLY = 'You have successfully applied to this game!'
+    static readonly REPLY = 'You are applying to this game '
+    static readonly DM = 'You have applied to '
 }
 
 export abstract class GameApplicationEmbedConstants{

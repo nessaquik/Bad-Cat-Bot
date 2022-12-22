@@ -2,6 +2,7 @@ import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
+import { addRole } from "../functions/applyToGame";
 import { createDiscussionThread, createApplicationThread, sendGameEmbed } from "../functions/createGame";
 import { Modal } from "./_modal";
 
@@ -44,11 +45,12 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
     return Promise.resolve(null)
 }
 
-async function SubmitModal(client: Client, interaction: Interaction) {
+async function SubmitModal(client: Client, interaction: Interaction, modalId: string) {
     if (interaction.isChatInputCommand()){
         const submitted = await interaction.awaitModalSubmit({
             time: 60000 * 10,
             filter: i => i.user.id === interaction.user.id 
+            && i.customId === modalId
             && i.customId.split(GlobalConstants.ID_SEPARATOR).length > 1 
             && i.customId.split(GlobalConstants.ID_SEPARATOR)[1] == interaction.id,
         }).catch(error => {
@@ -70,6 +72,7 @@ async function SubmitModal(client: Client, interaction: Interaction) {
 
                 var channel = interaction.channel as TextChannel
 
+                await addRole(dmId, role, client, interaction); 
                 await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id)
@@ -93,3 +96,4 @@ export const CreateGame: Modal = {
     getModal: GetModal,
     sumbitModal: SubmitModal
 }
+

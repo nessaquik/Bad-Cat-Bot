@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message } from "discord.js";
 import { AddButton } from "../buttons/_buttons";
 import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
@@ -27,7 +27,7 @@ export async function createApplicationThread(channel: TextChannel,
 
     //NOTE: This is read in getGameValues. Don't modify without changing that function
     //This is just a cheap ass way of saving DB money
-    var message = await thread.send([gameName, dm, role, questions].join('\n'))
+    var message = await thread.send(["0", gameName, dm, role, questions].join('\n'))
     return [thread.id, message.id].join(GlobalConstants.ID_SEPARATOR)
 }
 

@@ -15,7 +15,7 @@ export async function AddModal(client: Client,
     if (interaction.isChatInputCommand() || interaction.isButton()){
         const modalClass = Modals.get(modalId)
         const modal = await modalClass?.getModal(client, interaction, id);
-        await interaction.showModal(modal!);    
-        await modalClass?.sumbitModal(client, interaction)
+        await interaction.showModal(modal!);        
+        await modalClass?.sumbitModal(client, interaction, modal?.data.custom_id!)
     }
 }

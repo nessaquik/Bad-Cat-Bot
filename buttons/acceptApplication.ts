@@ -1,7 +1,8 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
-import { GameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
+import { addRoleUser } from "../functions/applyToGame";
+import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../functions/gameDetails";
 import { AddModal } from "../modals/_modals";
 import { Button } from "./_button";
 
@@ -26,12 +27,9 @@ async function execute(client: Client, interaction: Interaction) {
                 ephemeral: true
             });
         }
-        else{            
-            var role = interaction.guild?.roles.cache.find(role => role.name === game.role)
+        else{
             var user = await client.users.fetch(userId);
-            var member = await interaction.guild?.members.fetch(user)
-
-            await member?.roles.add(role!)            
+            await addRoleUser(user, game.role, client, interaction);        
             
             var embed = interaction.message.embeds[0]
             embed.fields.push({
@@ -45,6 +43,7 @@ async function execute(client: Client, interaction: Interaction) {
             await interaction.message.edit({embeds:[embed], components: []});
 
             user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
+            await incrementAcceptedCount(interaction.channel!, messageId)
             await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
         }
     }

@@ -24,3 +24,22 @@ export async function gameApplicationEmbed(user: User,
 
     await thread.send({ embeds: [embed], components: [row!] })
 }
+
+export async function addRole(
+    userId: string,
+    roleName: string,
+    client: Client, 
+    interaction: Interaction){
+    var user = await client.users.fetch(userId);
+    await addRoleUser(user, roleName, client, interaction)
+}
+
+export async function addRoleUser(
+    user: User,
+    roleName: string,
+    client: Client, 
+    interaction: Interaction){
+    var role = interaction.guild?.roles.cache.find(role => role.name === roleName)
+    var member = await interaction.guild?.members.fetch(user)
+    await member?.roles.add(role!) 
+}

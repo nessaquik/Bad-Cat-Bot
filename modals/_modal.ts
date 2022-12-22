@@ -4,5 +4,5 @@ export interface Modal
 {
     id: string,
     getModal: (client: Client, interaction: Interaction, id?: string) => Promise<ModalBuilder | null>
-    sumbitModal: (client:Client, interaction: Interaction) => void;
+    sumbitModal: (client:Client, interaction: Interaction, modalId: string) => void;
 }
