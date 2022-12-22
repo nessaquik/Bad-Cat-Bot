@@ -6,7 +6,7 @@ import { GlobalConstants } from "../constants/global";
 import { gameApplicationEmbed } from "../functions/applyToGame";
 import { getGameDetails, GameDetails } from "../functions/gameDetails";
 import { Modal } from "./_modal";
-import { v4 as uuidv4 } from 'uuid';
+import { Guid } from "guid-typescript";
 
 async function GetModal(client: Client, interaction: Interaction, id?: string) {
     if (interaction.isButton()){
@@ -15,8 +15,9 @@ async function GetModal(client: Client, interaction: Interaction, id?: string) {
         const messageId = ids[2]
         var game: GameDetails = await getGameDetails(client, threadId, messageId)
 
+        const uuid = Guid.create();
         const modal = new ModalBuilder()
-            .setCustomId(ApplyToGameModalConstants.ID + GlobalConstants.ID_SEPARATOR + id + GlobalConstants.ID_SEPARATOR + uuidv4())
+            .setCustomId(ApplyToGameModalConstants.ID + GlobalConstants.ID_SEPARATOR + id + GlobalConstants.ID_SEPARATOR + uuid)
             .setTitle(ApplyToGameModalConstants.MODAL_TITLE + game.gameName)
 
         const rows: ActionRowBuilder<TextInputBuilder>[] = []
