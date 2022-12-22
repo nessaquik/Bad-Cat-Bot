@@ -9,5 +9,8 @@ This uses [TodoMD](https://marketplace.visualstudio.com/items?itemName=usernameh
 (C) Give role to DM as soon as app is created +Feature #testing {cm:2022-12-22}
 (C) Count for accepted users +Feature #testing {cm:2022-12-22}
 
+(B) Refcator Buttons and Modals +Housekeeping
+(B) Save modal on cancel using modalId +Feature  #difficult
+
 (C) Make original post visible while filling out the application +Feature #testing #difficult
 (C) Include Player Art +Feature #testing #difficult
