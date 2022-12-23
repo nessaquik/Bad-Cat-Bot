@@ -46,7 +46,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
     // Chainging Modal Id works, but it's a bad workaround, especially because it doesn't save your details
     if (interaction.isButton()){
         const submitted = await interaction.awaitModalSubmit({
-            time: 60000 * 10,
+            time: 60000 * 30,
             filter: i => i.user.id === interaction.user.id
             && i.customId === modalId
         }).catch(error => {

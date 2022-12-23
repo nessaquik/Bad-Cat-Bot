@@ -50,7 +50,7 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
 async function SubmitModal(client: Client, interaction: Interaction, modalId: string) {
     if (interaction.isChatInputCommand()){
         const submitted = await interaction.awaitModalSubmit({
-            time: 60000 * 10,
+            time: 60000 * 30,
             filter: i => i.user.id === interaction.user.id 
             && i.customId === modalId
             && i.customId.split(GlobalConstants.ID_SEPARATOR).length > 1 
