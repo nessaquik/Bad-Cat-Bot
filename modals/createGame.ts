@@ -16,6 +16,7 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
             .setCustomId(CreateGameModalConstants.NAME_ID)
             .setLabel(CreateGameModalConstants.NAME_LABEL)
             .setStyle(TextInputStyle.Short)
+            .setMaxLength(25)
 
         const gameDescription = new TextInputBuilder()
             .setCustomId(CreateGameModalConstants.DESC_ID)
@@ -27,6 +28,7 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
             .setLabel(CreateGameModalConstants.TEMPLATE_LABEL)
             .setValue(CREATE_GAME_TEMPLATE)
             .setStyle(TextInputStyle.Paragraph)
+            .setMaxLength(1024)
 
         const applicationQuestion = new TextInputBuilder()
             .setCustomId(CreateGameModalConstants.QUESTIONS_ID)

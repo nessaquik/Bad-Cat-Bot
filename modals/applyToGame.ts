@@ -23,8 +23,8 @@ async function GetModal(client: Client, interaction: Interaction, id?: string) {
         const rows: ActionRowBuilder<TextInputBuilder>[] = []
         game.questions.forEach((value, index) => {
             var textVal = new TextInputBuilder()
-                .setCustomId(index+value.replace(/[^a-zA-Z]/g, ""))
-                .setLabel(value)
+                .setCustomId(index+value.replace(/[^a-zA-Z]/g, "").substring(0,40))
+                .setLabel(value.substring(0,40))
                 .setMaxLength(1024)
                 .setStyle(TextInputStyle.Paragraph)
             var component = new ActionRowBuilder().addComponents(textVal) as ActionRowBuilder<TextInputBuilder>
@@ -64,7 +64,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 game.questions.forEach((value, index) => {
                     answers.push({
                         name: value,
-                        value: submitted.fields.getTextInputValue(index+value.replace(/[^a-zA-Z]/g, ""))
+                        value: submitted.fields.getTextInputValue(index+value.replace(/[^a-zA-Z]/g, "").substring(0,40))
                     })
                 })
 
