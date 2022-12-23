@@ -3,7 +3,7 @@ import { CreateGameConstants, CreateGameModalConstants, EditGameModalConstants }
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
-import { createDiscussionThread, createApplicationThread, sendGameEmbed, getGameEmbed, editGameEmbed } from "../functions/createGame";
+import { getGameEmbed, editGameEmbed } from "../functions/createGame";
 import { editGameDetails, GameDetails, getGameDetails } from "../functions/gameDetails";
 import { Modal } from "./_modal";
 
