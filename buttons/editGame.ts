@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, PermissionsBitField, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, PermissionsBitField, SlashCommandBuilder } from "discord.js";
 import { EditGameModalConstants } from "../constants/createGame";
 import { ApplyGameButtonConstants, ApplyToGameModalConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
@@ -14,6 +14,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
+        log(interaction)
         var permissions = interaction.member?.permissions as PermissionsBitField
         if (permissions.has(GlobalConstants.Permissions)){
             await AddModal(client, interaction, EditGameModalConstants.ID, interaction.user.id)
@@ -25,6 +26,10 @@ async function execute(client: Client, interaction: Interaction) {
             });
         }        
     }
+}
+
+function log(interaction: ButtonInteraction){
+    console.log("Application edited by " + interaction.user.username)
 }
 
 export const EditGame: Button = {

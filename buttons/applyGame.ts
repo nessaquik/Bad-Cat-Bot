@@ -1,4 +1,5 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
+import { CreateGameConstants } from "../constants/createGame";
 import { ApplyGameButtonConstants, ApplyToGameModalConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import { AddModal } from "../modals/_modals";
@@ -13,8 +14,13 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
+        log(interaction)
         await AddModal(client, interaction, ApplyToGameModalConstants.ID, interaction.user.id)
     }
+}
+
+function log(interaction: ButtonInteraction){
+    console.log("Application started by " + interaction.user.username + " with id " + interaction.customId)
 }
 
 export const ApplyGame: Button = {

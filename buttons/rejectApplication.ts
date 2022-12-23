@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Embed, Interaction, SlashCommandBuilder, User } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Embed, Interaction, SlashCommandBuilder, User } from "discord.js";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import { GameDetails, getGameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
@@ -14,6 +14,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
+        log(interaction)
         const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
         const userId = ids[1]
         const messageId = ids[2]
@@ -44,6 +45,10 @@ async function execute(client: Client, interaction: Interaction) {
             await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM + user.username );
         }
     }
+}
+
+function log(interaction: ButtonInteraction){
+    console.log("Application rejected by " + interaction.user.username + " with id " + interaction.customId)
 }
 
 export const RejectApplication: Button = {

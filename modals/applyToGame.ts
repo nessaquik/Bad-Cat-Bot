@@ -60,6 +60,8 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const messageId = ids[2]
                 var game: GameDetails = await getGameDetails(client, threadId, messageId)
 
+                log(interaction, game)
+
                 var answers: APIEmbedField[] = []
                 game.questions.forEach((value, index) => {
                     answers.push({
@@ -88,6 +90,10 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
             }
         }
     }
+}
+
+function log(interaction: Interaction, game: GameDetails){
+    console.log("Application submitted by "+interaction.user.username + " for " + game.gameName)
 }
 
 export const ApplyToGame: Modal = {

@@ -61,6 +61,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
         })
         if (submitted) {
             try {
+                log(interaction)
                 const name = submitted.fields.getTextInputValue(CreateGameModalConstants.NAME_ID)
                 const desc = submitted.fields.getTextInputValue(CreateGameModalConstants.DESC_ID)
                 const template = submitted.fields.getTextInputValue(CreateGameModalConstants.TEMPLATE_ID)
@@ -91,6 +92,10 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
             }
         }
     }
+}
+
+function log(interaction: Interaction){
+    console.log("Game created by "+interaction.user.username)
 }
 
 export const CreateGame: Modal = {

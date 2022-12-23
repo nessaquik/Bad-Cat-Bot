@@ -15,6 +15,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
+        log(interaction)
         const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
         const userId = ids[1]
         const messageId = ids[2]
@@ -47,6 +48,10 @@ async function execute(client: Client, interaction: Interaction) {
             await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
         }
     }
+}
+
+function log(interaction: ButtonInteraction){
+    console.log("Application accepted by " + interaction.user.username + " with id " + interaction.customId)
 }
 
 export const AcceptApplication: Button = {

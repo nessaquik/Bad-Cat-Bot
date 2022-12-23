@@ -31,7 +31,7 @@ async function execute(client: Client, interaction: ChatInputCommandInteraction)
     await AddModal(client, interaction, CreateGameModalConstants.ID, interaction.id)
 }
 
-async function log(interaction: ChatInputCommandInteraction){
+function log(interaction: ChatInputCommandInteraction){
     const dm = interaction.options.getUser(CreateGameConstants.DM_OPTION)
     const dmId: string = dm?.id || ''
     const dmEmbed: string = dm?.toString() || ''
