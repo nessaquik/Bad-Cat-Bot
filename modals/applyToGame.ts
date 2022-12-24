@@ -7,6 +7,8 @@ import { gameApplicationEmbed } from "../functions/applyToGame";
 import { getGameDetails, GameDetails } from "../functions/gameDetails";
 import { Modal } from "./_modal";
 import { Guid } from "guid-typescript";
+import { AddAppCreatedToNotion } from "../notion/applicationCreated";
+import { AddAppStartedToNotion } from "../notion/applicationStarted";
 
 async function GetModal(client: Client, interaction: Interaction, id?: string) {
     if (interaction.isButton()){
@@ -45,6 +47,10 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
     // This can be mitigated by only storing one such event (doesn't matter if first one, the submitted will always have latest info anyway)
     // Chainging Modal Id works, but it's a bad workaround, especially because it doesn't save your details
     if (interaction.isButton()){
+        const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+        const threadId = ids[1]
+        const messageId = ids[2]
+        AddAppStartedToNotion(interaction.user.username, messageId)
         const submitted = await interaction.awaitModalSubmit({
             time: 60000 * 30,
             filter: i => i.user.id === interaction.user.id
@@ -55,9 +61,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
         })
         if (submitted) {
             try {              
-                const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-                const threadId = ids[1]
-                const messageId = ids[2]
+                
                 var game: GameDetails = await getGameDetails(client, threadId, messageId)
 
                 log(interaction, game)
@@ -76,6 +80,8 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                     game.gameName,
                     answers,
                     [interaction.user.id, game.messageId].join(GlobalConstants.ID_SEPARATOR))
+
+                AddAppCreatedToNotion(interaction.user.username,messageId)
 
                 interaction.user.send(ApplyToGameModalConstants.DM + game.gameName)
                 if (!submitted.replied) {
@@ -101,3 +107,4 @@ export const ApplyToGame: Modal = {
     getModal: GetModal,
     sumbitModal: SubmitModal
 }
+
