@@ -40,6 +40,14 @@ CONGRATULATIONS! You've made a Discord Bot. Now the hard part
 2. [Get VSCode](https://code.visualstudio.com/Download) - No Microsoft did not pay me, it's just that good
 3. Install [Git](https://git-scm.com/download/win)
 
+#### Notion?
+
+OK, so I thought it might be fun to store all this activity somewhere to be tested.
+I decided to go with a newfound love - Notion. If you would like to use this feature, follow [this set of instructions](https://developers.notion.com/docs/create-a-notion-integration)
+Get your secret key and store it in your env file  (see pt 2 of Using this code) under NOTIONTOKEN
+And edit the constants to be your own DB.
+This is still nascent, so it is not a tested flow. You can just ignore this part
+
 #### Using this code
 
 1. Clone the repo into your local machine
