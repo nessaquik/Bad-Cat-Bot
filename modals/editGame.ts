@@ -95,7 +95,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
 }
 
 function log(interaction: Interaction){
-    console.log("Game created by "+interaction.user.username)
+    console.log("Game edited by "+interaction.user.username)
 }
 
 export const EditGame: Modal = {

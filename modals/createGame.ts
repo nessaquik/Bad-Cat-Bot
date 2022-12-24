@@ -4,6 +4,7 @@ import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/crea
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
 import { createDiscussionThread, createApplicationThread, sendGameEmbed } from "../functions/createGame";
+import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 
 function GetModal(client: Client, interaction: Interaction, id?: string) {
@@ -79,6 +80,8 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id)
+
+                AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!)
 
                 if (!submitted.replied) {
                     await submitted.reply({
