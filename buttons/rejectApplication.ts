@@ -20,17 +20,16 @@ async function execute(client: Client, interaction: Interaction) {
         const messageId = ids[2]
         
         var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
+        var embed = interaction.message.embeds[0]
+        var user = await client.users.fetch(userId);
         
-        if (interaction.user.id != game.dm){
+        if (interaction.user.id != game.dm && interaction.user.id != user.id){
             await interaction.reply({
                 content: RejectApplicationButtonConstants.PERMISSION,
                 ephemeral: true
             });
         }
-        else{            
-            var user = await client.users.fetch(userId);
-            
-            var embed = interaction.message.embeds[0]
+        else{
             embed.fields.push({
                 name: "\u200B",
                 value: "\u200B"
@@ -41,7 +40,12 @@ async function execute(client: Client, interaction: Interaction) {
             });            
             await interaction.message.edit({embeds:[embed], components: []});
             
-            user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
+            if (interaction.user.id == user.id){
+                user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL_RESCIND + game.gameName)
+            }
+            else{
+                user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
+            }            
             await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM + user.username );
         }
     }

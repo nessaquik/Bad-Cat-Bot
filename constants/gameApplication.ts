@@ -21,12 +21,13 @@ export abstract class AcceptApplicationButtonConstants{
 
 export abstract class RejectApplicationButtonConstants{
     static readonly ID = "reject-application"
-    static readonly TITLE = "Reject"
+    static readonly TITLE = "Reject/Rescind"
     static readonly PERMISSION = "AYO! You are SO NOT the DM!"
-    static readonly MESSAGE_DM = "Application Rejected - "
+    static readonly MESSAGE_DM = "Application Rejected/Rescinded - "
     static readonly MESSAGE_PERSONAL = "Sorry, the DM decided to go with someone else for "
+    static readonly MESSAGE_PERSONAL_RESCIND = "You have rescinded your application for "
     static readonly STATUS_ID = "Status"
-    static readonly STATUS_MESSAGE = "You have Rejected this application"
+    static readonly STATUS_MESSAGE = "This application has been rejected/rescinded"
 }
 
 export abstract class ApplyToGameModalConstants{
