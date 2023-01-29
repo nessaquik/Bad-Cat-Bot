@@ -5,4 +5,5 @@ export abstract class GlobalConstants {
     static readonly ERROR = "An error occured. Blame Chava!"
     static readonly ID_SEPARATOR = '_'
     static readonly Permissions = PermissionFlagsBits.ModerateMembers
+    static readonly Shabbat = ":tada: SHABBOS IS HERE! SHABBAT SHALOM! :tada:\nWE'RE SO HAPPY. WE'RE GONNA SING AND DANCE. \nSIX DAYS A WEEK WE WAIT FOR SHABBAT, A GIFT FROM HASHEM. THE MOST PRECIOUS OF DAYS. \n\n\nAll of which is to say Rivka isn't here right now. Sorry."
 }

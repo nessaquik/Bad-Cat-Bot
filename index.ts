@@ -1,5 +1,5 @@
 import { GatewayIntentBits } from 'discord-api-types/v10'
-import DiscordJs, { Collection } from 'discord.js'
+import DiscordJs, { Collection, Events, userMention } from 'discord.js'
 import path from "path";
 import dotenv from 'dotenv'
 import { Commands } from './commands/_commands';
@@ -47,6 +47,19 @@ client.on('interactionCreate', async (interaction) => {
     else{
         return
     }    
+})
+
+client.on(Events.MessageCreate, async (message) => {
+    if (message.mentions != null && message.mentions.users != null){
+        message.mentions.users.forEach(async (user) => {
+            if (user.id==process.env.USERID){
+                var day = new Date(message.createdTimestamp).getUTCDay()
+                if (day == 6){
+                    message.reply(GlobalConstants.Shabbat)
+                }
+            }
+        });
+    }
 })
 
 client.login(process.env.TOKEN)

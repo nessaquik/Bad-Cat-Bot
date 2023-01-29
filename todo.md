@@ -17,5 +17,5 @@ This uses [TodoMD](https://marketplace.visualstudio.com/items?itemName=usernameh
 (C) Make original post visible while filling out the application +Feature #testing #difficult
 (C) Include Player Art +Feature #testing #difficult
 
-(D) Shabbat Message +Feature
+(D) Shabbat Message +Feature {cm:2023-01-29}
 (D) Test word limits +Bug {cm:2023-01-29}
