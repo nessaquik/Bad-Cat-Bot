@@ -26,7 +26,7 @@ async function GetModal(client: Client, interaction: Interaction, id?: string) {
         game.questions.forEach((value, index) => {
             var textVal = new TextInputBuilder()
                 .setCustomId(index+value.replace(/[^a-zA-Z]/g, "").substring(0,40))
-                .setLabel(value.substring(0,40))
+                .setLabel(value.substring(0,45))
                 .setMaxLength(1024)
                 .setStyle(TextInputStyle.Paragraph)
             var component = new ActionRowBuilder().addComponents(textVal) as ActionRowBuilder<TextInputBuilder>

@@ -11,7 +11,7 @@ export abstract class EditGameButtonConstants{
 
 export abstract class AcceptApplicationButtonConstants{
     static readonly ID = "accept-application"
-    static readonly TITLE = "Accept"
+    static readonly TITLE = "Accept this Application"
     static readonly PERMISSION = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE_DM = "Application Accepted - "
     static readonly MESSAGE_PERSONAL = "Hey! Welcome to "

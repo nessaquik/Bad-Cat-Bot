@@ -12,10 +12,10 @@ This uses [TodoMD](https://marketplace.visualstudio.com/items?itemName=usernameh
 
 (B) Refcator Buttons and Modals +Housekeeping
 (B) Save modal on cancel using modalId +Feature  #difficult
-(B) Allows users to rescind applications - This might involve them just using the cancel button +Feature #requested
+(B) Allows users to rescind applications - This might involve them just using the cancel button +Feature #requested {cm:2023-01-29}
 
 (C) Make original post visible while filling out the application +Feature #testing #difficult
 (C) Include Player Art +Feature #testing #difficult
 
 (D) Shabbat Message +Feature
-(D) Test word limits +Bug
+(D) Test word limits +Bug {cm:2023-01-29}
