@@ -1,12 +1,27 @@
 
 export abstract class ApplyGameButtonConstants{
     static readonly ID = "apply-to-game"
-    static readonly TITLE = "Apply to this game"
+    static readonly TITLE = "Apply to this game"    
+    static readonly PAUSED_TITLE = "Applications Paused"
 }
 
 export abstract class EditGameButtonConstants{
     static readonly ID = "edit-game"
     static readonly TITLE = "Edit this game"
+}
+
+export abstract class PauseGameButtonConstants{
+    static readonly ID = "pause-game"
+    static readonly TITLE = "Pause Applications"
+    static readonly PERMISSIONS = "AYO! You are SO NOT the DM!"
+    static readonly MESSAGE = "Applications for this game are paused"
+}
+
+export abstract class PlayGameButtonConstants{
+    static readonly ID = "enable-game"
+    static readonly TITLE = "Allow Applications"
+    static readonly PERMISSIONS = "AYO! You are SO NOT the DM!"
+    static readonly MESSAGE = "Applications are reenabled"
 }
 
 export abstract class AcceptApplicationButtonConstants{

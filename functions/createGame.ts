@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message } from "discord.js";
+import { PauseGame } from "../buttons/pauseApplications";
 import { AddButton } from "../buttons/_buttons";
 import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 
 export async function createDiscussionThread(channel: TextChannel,
@@ -54,9 +55,11 @@ export async function sendGameEmbed(channel: TextChannel,
 
     var applyButton = AddButton(ApplyGameButtonConstants.ID, undefined, undefined, detailsId)
     var editButton = AddButton(EditGameButtonConstants.ID, undefined, undefined, detailsId)
+    var pauseButton = AddButton(PauseGameButtonConstants.ID, undefined, undefined, detailsId)
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents([applyButton!, editButton!]);
+    const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents([pauseButton!]);
 
-    await channel.send({ embeds: [embed], components: [row!] })
+    await channel.send({ embeds: [embed], components: [row!, row2!] })
 }
 
 export async function editGameEmbed(message: Message,
@@ -87,4 +90,26 @@ export function getGameEmbed(message: Message) {
     var retVal = [embed.title!, embed.description!]
     embed.fields.forEach((value) => retVal.push(value.value))
     return retVal
+}
+
+export async function pauseGame(message: Message, detailsId: string){
+    var applyButton = AddButton(ApplyGameButtonConstants.ID, undefined, undefined, detailsId)
+    applyButton?.setDisabled(true)
+    applyButton?.setLabel(ApplyGameButtonConstants.PAUSED_TITLE)
+    var editButton = AddButton(EditGameButtonConstants.ID, undefined, undefined, detailsId)
+    var playButton = AddButton(PlayGameButtonConstants.ID, undefined, undefined, detailsId)    
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents([applyButton!, editButton!]);
+    const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents([playButton!]);
+
+    await message.edit({components: [row!, row2!]})
+}
+
+export async function playGame(message: Message, detailsId: string){
+    var applyButton = AddButton(ApplyGameButtonConstants.ID, undefined, undefined, detailsId)
+    var editButton = AddButton(EditGameButtonConstants.ID, undefined, undefined, detailsId)
+    var pauseButton = AddButton(PauseGameButtonConstants.ID, undefined, undefined, detailsId)    
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents([applyButton!, editButton!]);
+    const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents([pauseButton!]);
+
+    await message.edit({components: [row!, row2!]})
 }
