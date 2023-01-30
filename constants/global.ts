@@ -6,4 +6,6 @@ export abstract class GlobalConstants {
     static readonly ID_SEPARATOR = '_'
     static readonly Permissions = PermissionFlagsBits.ModerateMembers
     static readonly Shabbat = ":tada: SHABBOS IS HERE! SHABBAT SHALOM! :tada:\nWE'RE SO HAPPY. WE'RE GONNA SING AND DANCE. \nSIX DAYS A WEEK WE WAIT FOR SHABBAT, A GIFT FROM HASHEM. THE MOST PRECIOUS OF DAYS. \n\n\nAll of which is to say Rivka isn't here right now. Sorry."
+    static readonly Nessa = "Oh, you were looking for Nessa?"
+    static readonly NI = "https://cdn.discordapp.com/attachments/1067784384377274418/1069435256257654884/image.png"
 }

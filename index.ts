@@ -52,12 +52,15 @@ client.on('interactionCreate', async (interaction) => {
 client.on(Events.MessageCreate, async (message) => {
     if (message.mentions != null && message.mentions.users != null){
         message.mentions.users.forEach(async (user) => {
-            if (user.id==process.env.USERID){
+            if (user.id==process.env.USERID && message.mentions.repliedUser?.id!=process.env.USERID){
                 var day = new Date(message.createdTimestamp).getUTCDay()
                 if (day == 6){
                     message.reply(GlobalConstants.Shabbat)
                 }
             }
+            // else if (user.id==process.env.ADMINID && message.mentions.repliedUser?.id!=process.env.ADMINID){
+            //     message.reply({ content: GlobalConstants.Nessa, files: [GlobalConstants.NI] })
+            // }
         });
     }
 })

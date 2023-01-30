@@ -56,5 +56,5 @@ export abstract class GameApplicationEmbedConstants{
     static readonly EMBED_COLOR = "#B4CEA7"
     static readonly FOOTER = 'Chief of Operations, at your service!'
     static readonly TITLE = 'New Application for '
-    static readonly DESC = 'Sumbitted by '
+    static readonly DESC = 'Submitted by '
 }
