@@ -23,7 +23,9 @@ export async function gameApplicationEmbed(user: User,
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents([acceptButton!, rejectButton!]);
 
         await thread.send({ embeds: [embed], components: [row!] })
-        await user.send({ embeds: [embed] })
+
+        //Not awaiting this since it is tangential. It's only for recordkeeping, not vital to the process.
+        user.send({ embeds: [embed] })
 }
 
 export async function addRole(
