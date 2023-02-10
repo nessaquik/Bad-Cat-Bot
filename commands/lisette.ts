@@ -9,7 +9,10 @@ const command = new SlashCommandBuilder()
 
 async function execute(client: Client, interaction: ChatInputCommandInteraction) {
     var image = LisetteReactions.Images[Math.floor(Math.random() * LisetteReactions.Images.length)]
-    await interaction.reply({files: [image]});
+    await interaction.channel?.send({files: [image]});
+    await interaction.reply({ 
+        content: LisetteReactionsConstants.COMMAND_REPLY,
+        ephemeral: true})
 }
 
 export const Lisette: Command = {

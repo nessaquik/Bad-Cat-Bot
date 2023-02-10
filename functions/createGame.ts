@@ -113,3 +113,8 @@ export async function playGame(message: Message, detailsId: string){
 
     await message.edit({components: [row!, row2!]})
 }
+
+
+export async function addUserToChannel(userId: string, channel: TextChannel){
+    await channel.permissionOverwrites.edit(userId, { ViewChannel: true, SendMessages: true });
+}

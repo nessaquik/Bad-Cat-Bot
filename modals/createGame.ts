@@ -3,7 +3,7 @@ import { CreateGameConstants, CreateGameModalConstants } from "../constants/crea
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
-import { createDiscussionThread, createApplicationThread, sendGameEmbed } from "../functions/createGame";
+import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel } from "../functions/createGame";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 
@@ -77,6 +77,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 var channel = interaction.channel as TextChannel
 
                 await addRole(dmId, role, client, interaction); 
+                await addUserToChannel(dmId, channel);
                 await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id)
