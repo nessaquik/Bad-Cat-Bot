@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import { Commands } from './commands/_commands';
 import { GlobalConstants } from './constants/global';
 import { Buttons } from './buttons/_buttons';
+import { Responses } from './constants/resources';
 dotenv.config()
 
 const client = new DiscordJs.Client({
@@ -55,11 +56,11 @@ client.on(Events.MessageCreate, async (message) => {
             if (user.id==process.env.USERID && message.mentions.repliedUser?.id!=process.env.USERID){
                 var day = new Date(message.createdTimestamp).getUTCDay()
                 if (day == 6){
-                    message.reply(GlobalConstants.Shabbat)
+                    message.reply(Responses.Shabbat)
                 }
             }
             // else if (user.id==process.env.ADMINID && message.mentions.repliedUser?.id!=process.env.ADMINID){
-            //     message.reply({ content: GlobalConstants.Nessa, files: [GlobalConstants.NI] })
+            //     message.reply({ content: Responses.Nessa, files: [Responses.NI] })
             // }
         });
     }
