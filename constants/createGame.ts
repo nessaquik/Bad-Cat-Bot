@@ -23,6 +23,7 @@ export abstract class CreateGameEmbedConstants{
     static readonly DM = "DM"
     static readonly GAME_DETAILS = "Game Details"
     static readonly APPLICATION = "Application"
+    static readonly THREAD = "Got Questions?"
 }
 
 

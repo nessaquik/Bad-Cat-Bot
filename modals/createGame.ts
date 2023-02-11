@@ -78,9 +78,9 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
 
                 await addRole(dmId, role, client, interaction); 
                 await addUserToChannel(dmId, channel);
-                await createDiscussionThread(channel, name, dmId)
+                const threadURL = await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
-                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id)
+                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id, threadURL)
 
                 AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!)
 

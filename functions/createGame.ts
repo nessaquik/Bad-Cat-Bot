@@ -11,7 +11,8 @@ export async function createDiscussionThread(channel: TextChannel,
     const thread = await channel?.threads.create({
         name: CreateGameThreadConstants.DISCUSSION_THREAD_NAME + gameName,
     })
-    await thread.members.add(dm);
+    await thread.members.add(dm)
+    return thread.url
 }
 
 export async function createApplicationThread(channel: TextChannel,
@@ -38,17 +39,20 @@ export async function sendGameEmbed(channel: TextChannel,
     template: string,
     questions: string,
     dm: string,
-    detailsId: string
+    detailsId: string,
+    threadURL: string
 ) {
     const embed = new EmbedBuilder()
         .setTitle(gameName)
         .setColor(CreateGameEmbedConstants.EMBED_COLOR)
         .setDescription(desc)
         .setThumbnail(GlobalConstants.THUMBNAIL)
+        .setURL(threadURL)
         .addFields(
             { name: CreateGameEmbedConstants.DM, value: dm },
             { name: CreateGameEmbedConstants.GAME_DETAILS, value: template },
             { name: CreateGameEmbedConstants.APPLICATION, value: questions },
+            { name: CreateGameEmbedConstants.THREAD, value: "[See Discussion Thread]("+threadURL+")" },
         )
         .setTimestamp()
         .setFooter({ text: CreateGameEmbedConstants.FOOTER})
