@@ -20,7 +20,10 @@ export abstract class LisetteReactions {
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073493810455261214/image.png",
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073493970224680960/image.png",
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073494334940381274/image.png",
-        "https://cdn.discordapp.com/attachments/1070790206283841757/1073494459179864114/image.png"
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1073494459179864114/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1073814045427241010/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1073814163798892654/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1073814374671716482/image.png"
     ]
 }
 
