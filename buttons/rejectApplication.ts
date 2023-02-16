@@ -14,39 +14,48 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
-        log(interaction)
-        const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-        const userId = ids[1]
-        const messageId = ids[2]
-        
-        var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
-        var embed = interaction.message.embeds[0]
-        var user = await client.users.fetch(userId);
-        
-        if (interaction.user.id != game.dm && interaction.user.id != user.id){
-            await interaction.reply({
-                content: RejectApplicationButtonConstants.PERMISSION,
-                ephemeral: true
-            });
-        }
-        else{
-            embed.fields.push({
-                name: "\u200B",
-                value: "\u200B"
-            });
-            embed.fields.push({
-                name: RejectApplicationButtonConstants.STATUS_ID,
-                value: RejectApplicationButtonConstants.STATUS_MESSAGE
-            });            
-            await interaction.message.edit({embeds:[embed], components: []});
+        try {
+            log(interaction)
+            const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+            const userId = ids[1]
+            const messageId = ids[2]
             
-            if (interaction.user.id == user.id){
-                user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL_RESCIND + game.gameName)
+            var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
+            var embed = interaction.message.embeds[0]
+            var user = await client.users.fetch(userId);
+            
+            if (interaction.user.id != game.dm && interaction.user.id != user.id){
+                await interaction.reply({
+                    content: RejectApplicationButtonConstants.PERMISSION,
+                    ephemeral: true
+                });
             }
             else{
-                user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
-            }            
-            await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM + user.username );
+                embed.fields.push({
+                    name: "\u200B",
+                    value: "\u200B"
+                });
+                embed.fields.push({
+                    name: RejectApplicationButtonConstants.STATUS_ID,
+                    value: RejectApplicationButtonConstants.STATUS_MESSAGE
+                });            
+                await interaction.message.edit({embeds:[embed], components: []});
+                
+                if (interaction.user.id == user.id){
+                    user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL_RESCIND + game.gameName)
+                }
+                else{
+                    user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
+                }            
+                await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM + user.username );
+            }
+        }
+        catch (e) {
+            console.error(e)
+            await interaction.reply({
+                content: GlobalConstants.ERROR,
+                ephemeral: true
+            })
         }
     }
 }

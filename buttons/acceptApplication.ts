@@ -15,37 +15,45 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
-        log(interaction)
-        const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-        const userId = ids[1]
-        const messageId = ids[2]
-        
-        var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
-
-        if (interaction.user.id != game.dm){
-            await interaction.reply({
-                content: AcceptApplicationButtonConstants.PERMISSION,
-                ephemeral: true
-            });
-        }
-        else{
-            var user = await client.users.fetch(userId);
-            await addRoleUser(user, game.role, client, interaction);        
+        try {
+            log(interaction)
+            const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+            const userId = ids[1]
+            const messageId = ids[2]
             
-            var embed = interaction.message.embeds[0]
-            embed.fields.push({
-                name: "\u200B",
-                value: "\u200B"
-            });
-            embed.fields.push({
-                name: AcceptApplicationButtonConstants.STATUS_ID,
-                value: AcceptApplicationButtonConstants.STATUS_MESSAGE
-            });            
-            await interaction.message.edit({embeds:[embed], components: []});
+            var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
 
-            user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
-            await incrementAcceptedCount(interaction.channel!, messageId)
-            await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
+            if (interaction.user.id != game.dm){
+                await interaction.reply({
+                    content: AcceptApplicationButtonConstants.PERMISSION,
+                    ephemeral: true
+                });
+            }
+            else{
+                var user = await client.users.fetch(userId);
+                await addRoleUser(user, game.role, client, interaction);        
+                
+                var embed = interaction.message.embeds[0]
+                embed.fields.push({
+                    name: "\u200B",
+                    value: "\u200B"
+                });
+                embed.fields.push({
+                    name: AcceptApplicationButtonConstants.STATUS_ID,
+                    value: AcceptApplicationButtonConstants.STATUS_MESSAGE
+                });            
+                await interaction.message.edit({embeds:[embed], components: []});                
+                await incrementAcceptedCount(interaction.channel!, messageId)
+                user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName);
+                await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
+            }
+        }
+        catch (e) {
+            console.error(e)
+            await interaction.reply({
+                content: GlobalConstants.ERROR,
+                ephemeral: true
+            })
         }
     }
 }

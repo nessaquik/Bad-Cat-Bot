@@ -93,6 +93,12 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
             }
             catch (e) {
                 console.error(e)
+                if (!submitted.replied) {
+                    await submitted.reply({
+                        content: GlobalConstants.ERROR,
+                        ephemeral: true
+                    })
+                }
             }
         }
     }

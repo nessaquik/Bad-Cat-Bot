@@ -43,6 +43,10 @@ client.on('interactionCreate', async (interaction) => {
     else if (interaction.isButton()){
         const id = interaction.customId.split(GlobalConstants.ID_SEPARATOR)[0]
         const button = Buttons.get(id);
+        if (!button) {
+            interaction.followUp({ content: GlobalConstants.ERROR });
+            return;
+        }
         button?.execute(client, interaction)
     }
     else{
