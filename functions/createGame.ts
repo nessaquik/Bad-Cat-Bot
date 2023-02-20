@@ -73,15 +73,18 @@ export async function editGameEmbed(message: Message,
     questions: string,
     dm: string
 ) {
+    const url = message.embeds[0].url
     const embed= new EmbedBuilder()
         .setTitle(gameName)
         .setColor(CreateGameEmbedConstants.EMBED_COLOR)
         .setDescription(desc)
         .setThumbnail(GlobalConstants.THUMBNAIL)
+        .setURL(url)
         .addFields(
             { name: CreateGameEmbedConstants.DM, value: dm },
             { name: CreateGameEmbedConstants.GAME_DETAILS, value: template },
             { name: CreateGameEmbedConstants.APPLICATION, value: questions },
+            { name: CreateGameEmbedConstants.THREAD, value: "[See Discussion Thread]("+url+")" },
         )
         .setTimestamp()
         .setFooter({ text: CreateGameEmbedConstants.FOOTER})
