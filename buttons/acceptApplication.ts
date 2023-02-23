@@ -4,6 +4,7 @@ import { GlobalConstants } from "../constants/global";
 import { addRoleUser } from "../functions/applyToGame";
 import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../functions/gameDetails";
 import { AddModal } from "../modals/_modals";
+import { AddAppAcceptedToNotion } from "../notion/applicationAccepted";
 import { Button } from "./_button";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {    
@@ -45,6 +46,9 @@ async function execute(client: Client, interaction: Interaction) {
                 await interaction.message.edit({embeds:[embed], components: []});                
                 await incrementAcceptedCount(interaction.channel!, messageId)
                 user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName);
+
+                AddAppAcceptedToNotion(user.username, game.messageId)
+
                 await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
             }
         }

@@ -29,7 +29,7 @@ export async function AddAppCreatedToNotion(user: string,
                 }
             },
         })
-        console.log("Notion Entry Added for new game")
+        console.log("Notion Entry Added for new application created")
     } catch (error) {
         console.error(error)
     }

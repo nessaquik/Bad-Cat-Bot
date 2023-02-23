@@ -9,3 +9,7 @@ export abstract class AppStarted{
 export abstract class AppSent{
     static readonly DB_ID = "a0aa9b8c607940b0a979f43eeef45518"
 }
+
+export abstract class AppAccepted{
+    static readonly DB_ID = "f74a06fb9f5c43b892dcc9e175a26cdb"
+}

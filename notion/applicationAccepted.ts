@@ -1,10 +1,10 @@
 import { Client } from "@notionhq/client"
-import { AppStarted } from "./dbConstants"
+import { AppAccepted } from "./dbConstants"
 
-export async function AddAppStartedToNotion(user: string,
+export async function AddAppAcceptedToNotion(user: string,
     gameId: string) {
     const notion = new Client({ auth: process.env.NOTIONTOKEN })
-    const databaseId = AppStarted.DB_ID
+    const databaseId = AppAccepted.DB_ID
     try {
         await notion.pages.create({
             parent: { database_id: databaseId },
@@ -29,7 +29,7 @@ export async function AddAppStartedToNotion(user: string,
                 }
             },
         })
-        console.log("Notion Entry Added for new application started")
+        console.log("Notion Entry Added for acceptance")
     } catch (error) {
         console.error(error)
     }
