@@ -11,10 +11,6 @@ const command = new SlashCommandBuilder()
         .setName(CreateGameConstants.DM_OPTION)
         .setDescription(CreateGameConstants.DM_DESC)
         .setRequired(true))
-    .addRoleOption(option =>option
-        .setName(CreateGameConstants.ROLE_OPTION)
-        .setDescription(CreateGameConstants.ROLE_DESC)
-        .setRequired(true))
     .addStringOption(option =>option
         .setName(CreateGameConstants.PRIVACY_OPTION)
         .setDescription(CreateGameConstants.PRIVACY_DESC)
@@ -23,6 +19,10 @@ const command = new SlashCommandBuilder()
             { name: CreateGameConstants.PRIVACY_OPTION_PUBLIC, value: CreateGameConstants.PRIVACY_OPTION_PUBLIC },
             { name: CreateGameConstants.PRIVACY_OPTION_PRIVATE, value: CreateGameConstants.PRIVACY_OPTION_PRIVATE },
         ))
+    .addRoleOption(option =>option
+        .setName(CreateGameConstants.ROLE_OPTION)
+        .setDescription(CreateGameConstants.ROLE_DESC)
+        .setRequired(false))
     .setDefaultMemberPermissions(GlobalConstants.Permissions)
     .setDMPermission(false);
 

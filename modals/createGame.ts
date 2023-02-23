@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType } from "discord.js";
+import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, CreateRoleOptions, RoleManager } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
@@ -71,8 +71,15 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const dm = interaction.options.getUser(CreateGameConstants.DM_OPTION)
                 const dmId: string = dm?.id || ''
                 const dmEmbed: string = dm?.toString() || ''
-                const role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
                 const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
+                var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
+                if (role == ''){
+                    var roleOptions: CreateRoleOptions = {}
+                    roleOptions.name = name;
+                    var roleManager = interaction.guild?.roles as RoleManager
+                    var newRole = await roleManager.create(roleOptions)
+                    role = newRole?.name || ''
+                }
 
                 var channel = interaction.channel as TextChannel
 
@@ -81,15 +88,13 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const threadURL = await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id, threadURL)
-
-                AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!)
-
                 if (!submitted.replied) {
                     await submitted.reply({
                         content: CreateGameConstants.REPLY,
                         ephemeral: true
                     })
                 }
+                AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!)
             }
             catch (e) {
                 console.error(e)

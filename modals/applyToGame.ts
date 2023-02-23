@@ -81,15 +81,15 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                     answers,
                     [interaction.user.id, game.messageId].join(GlobalConstants.ID_SEPARATOR))
 
-                AddAppCreatedToNotion(interaction.user.username,messageId)
-
                 interaction.user.send(ApplyToGameModalConstants.DM + game.gameName)
                 if (!submitted.replied) {
                     await submitted.reply({
                         content: ApplyToGameModalConstants.DM + game.gameName,
                         ephemeral: true
                     })
-                }
+                }                
+
+                AddAppCreatedToNotion(interaction.user.username,messageId)
             }
             catch (e) {
                 console.error(e)

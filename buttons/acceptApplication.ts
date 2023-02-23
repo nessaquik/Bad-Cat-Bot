@@ -47,9 +47,8 @@ async function execute(client: Client, interaction: Interaction) {
                 await incrementAcceptedCount(interaction.channel!, messageId)
                 user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName);
 
-                AddAppAcceptedToNotion(user.username, game.messageId)
-
                 await interaction.reply(AcceptApplicationButtonConstants.MESSAGE_DM + user.username );
+                AddAppAcceptedToNotion(user.username, game.messageId)
             }
         }
         catch (e) {
