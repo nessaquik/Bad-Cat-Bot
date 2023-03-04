@@ -1,11 +1,13 @@
 import { Client } from "@notionhq/client"
 import { AppAccepted } from "./dbConstants"
+import { FindGameEntryById } from "./findGame"
 
 export async function AddAppAcceptedToNotion(user: string,
     gameId: string) {
     const notion = new Client({ auth: process.env.NOTIONTOKEN })
     const databaseId = AppAccepted.DB_ID
     try {
+        var gameEntryId = await FindGameEntryById(gameId)
         await notion.pages.create({
             parent: { database_id: databaseId },
             properties: {
@@ -15,6 +17,13 @@ export async function AddAppAcceptedToNotion(user: string,
                             "text": {
                                 "content": user
                             }
+                        }
+                    ]
+                },
+                "Games": {
+                    relation: [
+                        {
+                            "id": gameEntryId
                         }
                     ]
                 },
