@@ -1,9 +1,9 @@
 import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, CreateRoleOptions, RoleManager } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
-import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
+import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
-import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel } from "../functions/createGame";
+import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel, getGameFormat } from "../functions/createGame";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 
@@ -27,7 +27,7 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
         const gameTemplate = new TextInputBuilder()
             .setCustomId(CreateGameModalConstants.TEMPLATE_ID)
             .setLabel(CreateGameModalConstants.TEMPLATE_LABEL)
-            .setValue(CREATE_GAME_TEMPLATE)
+            .setValue(CREATE_GAME_TEMPLATE.join(GAME_DETAILS_SEPARATOR + "\n"))
             .setStyle(TextInputStyle.Paragraph)
             .setMaxLength(1024)
 
@@ -88,13 +88,16 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const threadURL = await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id, threadURL)
+
                 if (!submitted.replied) {
                     await submitted.reply({
                         content: CreateGameConstants.REPLY,
                         ephemeral: true
                     })
                 }
-                AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!)
+
+                var gameFormat = getGameFormat(template)
+                AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
             }
             catch (e) {
                 console.error(e)

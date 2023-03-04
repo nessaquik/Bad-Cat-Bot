@@ -1,6 +1,6 @@
 import { Client } from "@notionhq/client"
 import { AppStarted } from "./dbConstants"
-import { FindGameEntryById } from "./findGame"
+import { FindGameEntryById } from "./notionFunctions"
 
 export async function AddAppStartedToNotion(user: string,
     gameId: string) {

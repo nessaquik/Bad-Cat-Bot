@@ -2,6 +2,7 @@ import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, Chann
 import { PauseGame } from "../buttons/pauseApplications";
 import { AddButton } from "../buttons/_buttons";
 import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
+import { CREATE_GAME_TEMPLATE_VALUES, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 
@@ -124,4 +125,14 @@ export async function playGame(message: Message, detailsId: string){
 
 export async function addUserToChannel(userId: string, channel: TextChannel){
     await channel.permissionOverwrites.edit(userId, { ViewChannel: true, SendMessages: true });
+}
+
+export function getGameFormat(gameDetails: string){
+    var gameDetailsList = gameDetails.split('\n')
+    for (var detail of gameDetailsList){
+        if (detail.includes(CREATE_GAME_TEMPLATE_VALUES.FORMAT)){
+            return detail.replace(CREATE_GAME_TEMPLATE_VALUES.FORMAT + GAME_DETAILS_SEPARATOR, "")
+        }
+    }
+    return ""
 }

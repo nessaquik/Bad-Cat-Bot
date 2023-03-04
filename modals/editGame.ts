@@ -1,6 +1,5 @@
 import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants, EditGameModalConstants } from "../constants/createGame";
-import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
 import { getGameEmbed, editGameEmbed } from "../functions/createGame";
@@ -32,14 +31,12 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
         const gameTemplate = new TextInputBuilder()
             .setCustomId(CreateGameModalConstants.TEMPLATE_ID)
             .setLabel(CreateGameModalConstants.TEMPLATE_LABEL)
-            .setValue(CREATE_GAME_TEMPLATE)
             .setStyle(TextInputStyle.Paragraph)
             .setValue(values.shift()!)
 
         const applicationQuestion = new TextInputBuilder()
             .setCustomId(CreateGameModalConstants.QUESTIONS_ID)
             .setLabel(CreateGameModalConstants.QUESTIONS_LABEL)
-            .setValue(CREATE_GAME_APPLICATION)
             .setStyle(TextInputStyle.Paragraph)
             .setValue(values.shift()!)
 
