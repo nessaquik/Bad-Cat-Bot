@@ -37,7 +37,7 @@ export abstract class CreateGameModalConstants{
     static readonly TEMPLATE_ID = 'gameTemplate';
     static readonly TEMPLATE_LABEL = 'Fill out this template'   
     static readonly QUESTIONS_ID = 'gameQuestions';
-    static readonly QUESTIONS_LABEL = 'Player Application'
+    static readonly QUESTIONS_LABEL = 'Player Application (5 questions only ERIK!)'
 }
 
 export abstract class EditGameModalConstants{
