@@ -23,7 +23,8 @@ export abstract class LisetteReactions {
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073494459179864114/image.png",
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073814045427241010/image.png",
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073814163798892654/image.png",
-        "https://cdn.discordapp.com/attachments/1070790206283841757/1073814374671716482/image.png"
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1073814374671716482/image.png",
+        "https://cdn.discordapp.com/attachments/943465377306935387/1082813474045956167/image.png"
     ]
 }
 

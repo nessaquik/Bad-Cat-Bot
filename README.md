@@ -69,7 +69,6 @@ You can test it in your test server
 
 ### Host the bot
 
-Haven't figured this one out yet. Testing a few options. Will update when I find it.
-For now, I've been using my Raspberry Pi
+I am hosting the bot using Heroku, which has proven to be quite cheap, and awesome.
 
 HAPPY CODING!
