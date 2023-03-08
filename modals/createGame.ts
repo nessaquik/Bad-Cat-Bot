@@ -100,10 +100,12 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
                 
                 if ((gameFormat.toLowerCase().indexOf("one shot") !== -1 || gameFormat.toLowerCase().indexOf("oneshot") !== -1) && interaction.guild != null) { 
+                    console.log("Creating channel")
                     var channel = await createOneshotChannel(interaction.guild, name, role)
                     interaction.channel?.send({
                         content: CreateGameConstants.CHANNEL_CREATION_MESSAGE + channel.toString()
                     })
+                    console.log("Channel created for "+name)
                 }
             }
             catch (e) {
