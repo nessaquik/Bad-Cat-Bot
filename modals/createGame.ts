@@ -3,7 +3,7 @@ import { CreateGameConstants, CreateGameModalConstants } from "../constants/crea
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
-import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel, getGameFormat } from "../functions/createGame";
+import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel, getGameFormat, createOneshotChannel } from "../functions/createGame";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 
@@ -95,9 +95,16 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                         ephemeral: true
                     })
                 }
-
                 var gameFormat = getGameFormat(template)
+                
                 AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
+                
+                if ((gameFormat.toLowerCase().indexOf("one shot") !== -1 || gameFormat.toLowerCase().indexOf("oneshot") !== -1) && interaction.guild != null) { 
+                    var channel = await createOneshotChannel(interaction.guild, name, role)
+                    interaction.channel?.send({
+                        content: CreateGameConstants.CHANNEL_CREATION_MESSAGE + channel.toString()
+                    })
+                }
             }
             catch (e) {
                 console.error(e)
@@ -115,4 +122,3 @@ export const CreateGame: Modal = {
     getModal: GetModal,
     sumbitModal: SubmitModal
 }
-

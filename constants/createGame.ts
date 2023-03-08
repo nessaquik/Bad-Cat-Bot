@@ -10,6 +10,7 @@ export abstract class CreateGameConstants {
     static readonly PRIVACY_OPTION_PUBLIC = 'public';
     static readonly PRIVACY_OPTION_PRIVATE = 'private';
     static readonly REPLY = 'The game was successfully created!'
+    static readonly CHANNEL_CREATION_MESSAGE = '*This feature is experimental. The channel for this game can be found at* - '
 }
 
 export abstract class CreateGameThreadConstants{

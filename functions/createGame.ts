@@ -1,10 +1,12 @@
-import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message } from "discord.js";
+import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, Guild } from "discord.js";
 import { PauseGame } from "../buttons/pauseApplications";
 import { AddButton } from "../buttons/_buttons";
 import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE_VALUES, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
+import dotenv from 'dotenv'
+dotenv.config()
 
 export async function createDiscussionThread(channel: TextChannel,
     gameName: string,
@@ -135,4 +137,18 @@ export function getGameFormat(gameDetails: string){
         }
     }
     return ""
+}
+
+export async function createOneshotChannel(guild: Guild, gameName: string, roleName: string){
+    var channel = await guild.channels.create({
+        name: gameName,
+        type: ChannelType.GuildText,
+        parent: process.env.CHANNELPARENTID,
+    });
+    var role = guild?.roles.cache.find(role => role.name === roleName)
+    await channel.permissionOverwrites.edit(channel.guild.roles.everyone, { ViewChannel: false, SendMessages: false });
+    if (role != null){
+        await channel.permissionOverwrites.edit(role, { ViewChannel: true, SendMessages: true });
+    }
+    return channel    
 }
