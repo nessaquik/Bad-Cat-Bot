@@ -14,6 +14,11 @@ export abstract class AppAccepted{
     static readonly DB_ID = "f74a06fb9f5c43b892dcc9e175a26cdb"
 }
 
+export abstract class Blacklist{
+    static readonly DB_ID = "f30aa10f56fa4d76b484efc73653687e"
+}
+
+
 
 // Note: This is for local testing only. Commemt out before committing.
 // export abstract class Game{
