@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, CreateRoleOptions, RoleManager } from "discord.js";
+import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, RoleCreateOptions, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, RoleManager } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
@@ -74,7 +74,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
                 var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
                 if (role == ''){
-                    var roleOptions: CreateRoleOptions = {}
+                    var roleOptions: RoleCreateOptions = {}
                     roleOptions.name = name;
                     var roleManager = interaction.guild?.roles as RoleManager
                     var newRole = await roleManager.create(roleOptions)

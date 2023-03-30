@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@notionhq/client": "^2.2.3",
-    "discord.js": "^14.7.1",
+    "discord.js": "^14.8.0",
     "dotenv": "^16.0.3",
     "guid-typescript": "^1.0.9",
     "ts-node": "^10.9.1",
