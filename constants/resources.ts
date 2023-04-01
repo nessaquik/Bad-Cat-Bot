@@ -29,7 +29,6 @@ export abstract class LisetteReactions {
 }
 
 export class Responses {
-    static readonly Shabbat = ":tada: SHABBOS IS HERE! SHABBAT SHALOM! :tada:\nWE'RE SO HAPPY. WE'RE GONNA SING AND DANCE. \nSIX DAYS A WEEK WE WAIT FOR SHABBAT, A GIFT FROM HASHEM. THE MOST PRECIOUS OF DAYS. \n\n\nAll of which is to say Rivka isn't here right now. Sorry."
-    static readonly Nessa = "Oh, you were looking for Nessa?"
-    static readonly NI = "https://cdn.discordapp.com/attachments/1067784384377274418/1069435256257654884/image.png"
+    static readonly Shabbat = "`:tada: SHABBOS IS HERE! SHABBAT SHALOM! :tada:\nWE'RE SO HAPPY. WE'RE GONNA SING AND DANCE. \nSIX DAYS A WEEK WE WAIT FOR SHABBAT, A GIFT FROM HASHEM. THE MOST PRECIOUS OF DAYS. \n\n\nAll of which is to say Rivka isn't here right now. Sorry.`"
+    static readonly Pesach = "`Hi! Rivka is most likely busy with Passover/End of the World. \n\nIf you are receiving this message, I seem to be working fine. If it's a bot problem, don't touch it for 10 minutes till I reboot. \n\n If it's not but you still need an answer just send her a DM and she might respond. Otherwise, wait till 14th April. \n\nPesach Sameach!`"
 }

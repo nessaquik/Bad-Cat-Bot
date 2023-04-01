@@ -10,6 +10,10 @@ export class CREATE_GAME_TEMPLATE_VALUES {
     static readonly APP_CLOSE = `**Applications Close**`
 }
 
+export class EXTRACT_GAME_VALUES {
+    static readonly FORMAT = `Game Format`
+}
+
 export const GAME_DETAILS_SEPARATOR = ": "
 export const CREATE_GAME_TEMPLATE = [
     CREATE_GAME_TEMPLATE_VALUES.FORMAT,

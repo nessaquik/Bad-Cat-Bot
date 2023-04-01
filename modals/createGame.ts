@@ -75,7 +75,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
                 if (role == ''){
                     var roleOptions: RoleCreateOptions = {}
-                    roleOptions.name = name;
+                    roleOptions.name = name.replace(/[^a-zA-Z0-9 ]/g, '');;
                     var roleManager = interaction.guild?.roles as RoleManager
                     var newRole = await roleManager.create(roleOptions)
                     role = newRole?.name || ''
@@ -99,7 +99,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 
                 AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
                 
-                if ((gameFormat.toLowerCase().indexOf("one shot") !== -1 || gameFormat.toLowerCase().indexOf("oneshot") !== -1) && interaction.guild != null) { 
+                if (gameFormat.toLowerCase().indexOf("oneshot") !== -1 && interaction.guild != null) { 
                     console.log("Creating channel")
                     var channel = await createOneshotChannel(interaction.guild, name, role)
                     interaction.channel?.send({
