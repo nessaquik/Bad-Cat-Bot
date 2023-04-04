@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 import { Commands } from './commands/_commands';
 import { GlobalConstants } from './constants/global';
 import { Buttons } from './buttons/_buttons';
-import { Responses } from './constants/resources';
+import { ID, Responses } from './constants/resources';
 dotenv.config()
 
 const client = new DiscordJs.Client({
@@ -62,6 +62,9 @@ client.on(Events.MessageCreate, async (message) => {
                 // if (day == 6){
                 //     message.reply(Responses.Shabbat)
                 // }
+                message.reply(Responses.Pesach)
+            }
+            if (user.id==ID.FORMULATE && message.mentions.repliedUser?.id!=ID.FORMULATE){
                 message.reply(Responses.Pesach)
             }
         });
