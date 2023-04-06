@@ -24,15 +24,22 @@ export abstract class LisetteReactions {
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073814045427241010/image.png",
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073814163798892654/image.png",
         "https://cdn.discordapp.com/attachments/1070790206283841757/1073814374671716482/image.png",
-        "https://cdn.discordapp.com/attachments/943465377306935387/1082813474045956167/image.png"
+        "https://cdn.discordapp.com/attachments/943465377306935387/1082813474045956167/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097928786906988554/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097928911372959924/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097929011335802980/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097929250448867359/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097929437560975380/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097929581505294356/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097929682390884362/image.png",
+        "https://cdn.discordapp.com/attachments/1070790206283841757/1097971864409751692/image.png"
     ]
-}
-
-export class Responses {
-    static readonly Shabbat = "`:tada: SHABBOS IS HERE! SHABBAT SHALOM! :tada:\nWE'RE SO HAPPY. WE'RE GONNA SING AND DANCE. \nSIX DAYS A WEEK WE WAIT FOR SHABBAT, A GIFT FROM HASHEM. THE MOST PRECIOUS OF DAYS. \n\n\nAll of which is to say Rivka isn't here right now. Sorry.`"
-    static readonly Pesach = "Hi! Rivka is most likely busy right now. \n\nIf you are receiving this message, I seem to be online. If it's a bot problem, follow the following steps\n1. Check if the bot is online. If it isn't please don't touch anything related to the bot for 10 minutes and it will auto-reboot till it is online\n2. Try `/lisette`. If your second favorite Dean is being sassy, the problem is likely with a particular application. Narrow it down by trial and error and DO NOT interact with the problematic application any further. The rest of them should work fine. Rivka will look into it when she is back.\n3. If you can't Lisette, the problem is with the bot as a whole. You will have to do without it for now. Send Rivka a DM and she might fix it. \n\n If this is NOT about the bot but you still need an answer just send Rivka a DM and she might respond. Otherwise, wait till 14th April. \n\nPesach Sameach!"
 }
 
 export class ID {
     static readonly FORMULATE = "1053571349425172480"
+}
+
+export class Content {
+    static readonly LISETTE = "lisette"
 }
