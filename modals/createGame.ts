@@ -1,9 +1,9 @@
 import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, RoleCreateOptions, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, RoleManager } from "discord.js";
-import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
+import { CreateGameChannelConstants, CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { addRole } from "../functions/applyToGame";
-import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel, getGameFormat, createOneshotChannel } from "../functions/createGame";
+import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel, getGameFormat, createOneshotChannel, createCampaignChannel } from "../functions/createGame";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 
@@ -72,7 +72,15 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const dmId: string = dm?.id || ''
                 const dmEmbed: string = dm?.toString() || ''
                 const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
-                var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
+                var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''                
+
+                if (!submitted.replied) {
+                    await submitted.reply({
+                        content: CreateGameConstants.REPLY,
+                        ephemeral: true
+                    })
+                }
+
                 if (role == ''){
                     var roleOptions: RoleCreateOptions = {}
                     roleOptions.name = name.replace(/[^a-zA-Z0-9 ]/g, '');;
@@ -88,24 +96,27 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const threadURL = await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id, threadURL)
-
-                if (!submitted.replied) {
-                    await submitted.reply({
-                        content: CreateGameConstants.REPLY,
-                        ephemeral: true
-                    })
-                }
-                var gameFormat = getGameFormat(template)
                 
+                var gameFormat = getGameFormat(template)                
                 AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
                 
+                //Create One shot channel
                 if (gameFormat.toLowerCase().indexOf("oneshot") !== -1 && interaction.guild != null) { 
                     console.log("Creating channel")
                     var channel = await createOneshotChannel(interaction.guild, name, role)
                     interaction.channel?.send({
-                        content: CreateGameConstants.CHANNEL_CREATION_MESSAGE + channel.toString()
+                        content: CreateGameChannelConstants.OS_CHANNEL_CREATED + channel.toString()
                     })
                     console.log("Channel created for "+name)
+                }
+                //Create campaign category if not ongoing
+                else if (gameFormat.toLowerCase().indexOf("ongoing") == -1 && interaction.guild != null) { 
+                    console.log("Creating campaign category")
+                    var channel = await createCampaignChannel(interaction.guild, name, role)
+                    interaction.channel?.send({
+                        content: CreateGameChannelConstants.CAMAPIGN_CHANNEL_CREATED + channel.toString()
+                    })
+                    console.log("Category created for "+name)
                 }
             }
             catch (e) {

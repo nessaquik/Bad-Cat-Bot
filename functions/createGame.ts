@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, Guild } from "discord.js";
 import { PauseGame } from "../buttons/pauseApplications";
 import { AddButton } from "../buttons/_buttons";
-import { CreateGameEmbedConstants, CreateGameThreadConstants } from "../constants/createGame";
+import { CreateGameEmbedConstants, CreateGameThreadConstants, CreateGameChannelConstants } from "../constants/createGame";
 import { CREATE_GAME_TEMPLATE_VALUES, EXTRACT_GAME_VALUES, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
@@ -151,4 +151,22 @@ export async function createOneshotChannel(guild: Guild, gameName: string, roleN
         await channel.permissionOverwrites.edit(role, { ViewChannel: true, SendMessages: true });
     }
     return channel    
+}
+
+export async function createCampaignChannel(guild: Guild, gameName: string, roleName: string){
+    var channel = await guild.channels.create({
+        name: gameName,
+        type: ChannelType.GuildCategory
+    });
+    var role = guild?.roles.cache.find(role => role.name === roleName)
+    await channel.permissionOverwrites.edit(channel.guild.roles.everyone, { ViewChannel: false, SendMessages: false });
+    if (role != null){
+        await channel.permissionOverwrites.edit(role, { ViewChannel: true, SendMessages: true });
+    }
+    var oocChannel = await guild.channels.create({
+        name: CreateGameChannelConstants.CHANNEL_NAME,
+        type: ChannelType.GuildText,
+        parent: channel.id
+    });
+    return oocChannel    
 }

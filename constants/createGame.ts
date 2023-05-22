@@ -9,8 +9,7 @@ export abstract class CreateGameConstants {
     static readonly PRIVACY_DESC = 'Should the applications be publicaly visible'
     static readonly PRIVACY_OPTION_PUBLIC = 'public';
     static readonly PRIVACY_OPTION_PRIVATE = 'private';
-    static readonly REPLY = 'The game was successfully created!'
-    static readonly CHANNEL_CREATION_MESSAGE = '*This feature is experimental. The channel for this game can be found at* - '
+    static readonly REPLY = 'Input parsed successfully, game is being created!'
 }
 
 export abstract class CreateGameThreadConstants{
@@ -46,4 +45,10 @@ export abstract class EditGameModalConstants{
     static readonly MODAL_TITLE = 'Edit game details'
     static readonly REPLY = 'The game was successfully edited!'
     static readonly PERMISSIONS = 'Only the admins can edit a posted game.'
+}
+
+export abstract class CreateGameChannelConstants{
+    static readonly CHANNEL_NAME = "ooc-chat"
+    static readonly OS_CHANNEL_CREATED = '*The channel for this one shot can be found at* - '
+    static readonly CAMAPIGN_CHANNEL_CREATED = '*The category for this game can be found at* - '
 }

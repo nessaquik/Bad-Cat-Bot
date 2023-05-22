@@ -75,9 +75,6 @@ client.on('interactionCreate', async (interaction) => {
 client.on(Events.MessageCreate, async (message) => {
     if (message.mentions != null && message.mentions.users != null && message.author.id != ID.FORMULATE){
         message.mentions.users.forEach(async (user) => {
-            // if (user.id==process.env.USERID && message.mentions.repliedUser?.id!=process.env.USERID){
-            //     message.reply(Responses.Pesach)
-            // }
             // if (user.id==ID.FORMULATE && message.mentions.repliedUser?.id!=ID.FORMULATE){
             //     message.reply(Responses.Pesach)
             // }
