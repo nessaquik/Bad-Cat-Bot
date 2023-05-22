@@ -48,7 +48,8 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
         const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
         const threadId = ids[1]
         const messageId = ids[2]
-        AddAppStartedToNotion(interaction.user.username, messageId)
+        // ! DO NOT RECORD THIS ANYMORE
+        //AddAppStartedToNotion(interaction.user.username, messageId)
         const submitted = await interaction.awaitModalSubmit({
             time: 60000 * 30,
             filter: i => i.user.id === interaction.user.id
