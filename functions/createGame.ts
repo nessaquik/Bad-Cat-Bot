@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, Guild } from "discord.js";
+import { ChatInputCommandInteraction, ModalSubmitInteraction, TextChannel, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, Guild, ButtonInteraction, Client } from "discord.js";
 import { PauseGame } from "../buttons/pauseApplications";
 import { AddButton } from "../buttons/_buttons";
 import { CreateGameEmbedConstants, CreateGameThreadConstants, CreateGameChannelConstants } from "../constants/createGame";
@@ -6,6 +6,7 @@ import { CREATE_GAME_TEMPLATE_VALUES, EXTRACT_GAME_VALUES, GAME_DETAILS_SEPARATO
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import dotenv from 'dotenv'
+import { GameDetails, getGameDetails } from "./gameDetails";
 dotenv.config()
 
 export async function createDiscussionThread(channel: TextChannel,
@@ -100,6 +101,40 @@ export function getGameEmbed(message: Message) {
     var retVal = [embed.title!, embed.description!]
     embed.fields.forEach((value) => retVal.push(value.value))
     return retVal
+}
+
+export async function editApplicationState(
+    client: Client, 
+    interaction: ButtonInteraction,
+    pause: boolean){
+        const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
+        const threadId = ids[1]
+        const messageId = ids[2]
+        var game: GameDetails = await getGameDetails(client, threadId, messageId)
+        
+        if (interaction.user.id == game.dm){
+            if (pause){
+                //! NEED TO DEPRECATE - Switch to moving channels instead.
+                var user = await client.users.fetch(process.env.ADMINID ? process.env.ADMINID : "");
+                user.send(PauseGameButtonConstants.MESSAGE + ": " + game.gameName);
+
+                await pauseGame(interaction.message, threadId+GlobalConstants.ID_SEPARATOR+messageId)
+            }
+            else {
+                await playGame(interaction.message, threadId+GlobalConstants.ID_SEPARATOR+messageId)
+            }
+
+            await interaction.reply({
+                content: pause ? PauseGameButtonConstants.MESSAGE : PlayGameButtonConstants.MESSAGE,
+                ephemeral: true
+            });
+        }
+        else{
+            await interaction.reply({
+                content: PlayGameButtonConstants.PERMISSIONS,
+                ephemeral: true
+            });
+        } 
 }
 
 export async function pauseGame(message: Message, detailsId: string){

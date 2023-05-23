@@ -46,3 +46,13 @@ export async function addRoleUser(
     var member = await interaction.guild?.members.fetch(user)
     await member?.roles.add(role!) 
 }
+
+export async function removeRoleUser(
+    user: User,
+    roleName: string,
+    client: Client, 
+    interaction: Interaction){
+    var role = interaction.guild?.roles.cache.find(role => role.name === roleName)
+    var member = await interaction.guild?.members.fetch(user)
+    await member?.roles.remove(role!) 
+}

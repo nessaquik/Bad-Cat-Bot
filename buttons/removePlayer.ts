@@ -1,14 +1,15 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Embed, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RemovePlayerButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import { GameDetails, getGameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
 import { AddModal } from "../modals/_modals";
 import { Button } from "./_button";
+import { removeRoleUser } from "../functions/applyToGame";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
     return new ButtonBuilder()
-            .setCustomId(RejectApplicationButtonConstants.ID + GlobalConstants.ID_SEPARATOR + id)
-            .setLabel(RejectApplicationButtonConstants.TITLE)
+            .setCustomId(RemovePlayerButtonConstants.ID + GlobalConstants.ID_SEPARATOR + id)
+            .setLabel(RemovePlayerButtonConstants.TITLE)
             .setStyle(ButtonStyle.Danger)
 }
 
@@ -24,31 +25,28 @@ async function execute(client: Client, interaction: Interaction) {
             var embed = interaction.message.embeds[0]
             var user = await client.users.fetch(userId);
             
-            if (interaction.user.id != game.dm && interaction.user.id != user.id){
+            if (interaction.user.id != game.dm){
                 await interaction.reply({
-                    content: RejectApplicationButtonConstants.PERMISSION,
+                    content: RemovePlayerButtonConstants.PERMISSION,
                     ephemeral: true
                 });
             }
             else{
+                var user = await client.users.fetch(userId);
+                await removeRoleUser(user, game.role, client, interaction); 
+
                 embed.fields.push({
                     name: "\u200B",
                     value: "\u200B"
                 });
                 embed.fields.push({
-                    name: RejectApplicationButtonConstants.STATUS_ID,
-                    value: RejectApplicationButtonConstants.STATUS_MESSAGE
+                    name: RemovePlayerButtonConstants.STATUS_ID,
+                    value: RemovePlayerButtonConstants.STATUS_MESSAGE
                 });            
                 await interaction.message.edit({embeds:[embed], components: []});
-                
-                if (interaction.user.id == user.id){
-                    user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL_RESCIND + game.gameName)
-                    await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM_RESCIND + user.username );
-                }
-                else{
-                    user.send(RejectApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName)
-                    await interaction.reply(RejectApplicationButtonConstants.MESSAGE_DM + user.username );
-                }                
+
+                user.send(RemovePlayerButtonConstants.MESSAGE_PERSONAL + game.gameName)
+                await interaction.reply(RemovePlayerButtonConstants.MESSAGE_DM + user.username );              
             }
         }
         catch (e) {
@@ -62,11 +60,11 @@ async function execute(client: Client, interaction: Interaction) {
 }
 
 function log(interaction: ButtonInteraction){
-    console.log("Application rejected by " + interaction.user.username + " with id " + interaction.customId)
+    console.log("Player removed by " + interaction.user.username + " with id " + interaction.customId)
 }
 
-export const RejectApplication: Button = {
-    id: RejectApplicationButtonConstants.ID,
+export const RemovePlayer: Button = {
+    id: RemovePlayerButtonConstants.ID,
     getButton: getButton,
     execute: execute
 }

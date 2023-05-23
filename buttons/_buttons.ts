@@ -6,6 +6,7 @@ import { PauseGame } from "./pauseApplications";
 import { PlayGame } from "./playApplications";
 import { RejectApplication } from "./rejectApplication";
 import { Button } from "./_button"
+import { RemovePlayer } from "./removePlayer";
 
 export const Buttons = new Map<string, Button>()
 Buttons.set(ApplyGame.id, ApplyGame)
@@ -14,6 +15,7 @@ Buttons.set(AcceptApplication.id, AcceptApplication)
 Buttons.set(RejectApplication.id, RejectApplication)
 Buttons.set(PauseGame.id, PauseGame)
 Buttons.set(PlayGame.id, PlayGame)
+Buttons.set(RemovePlayer.id, RemovePlayer)
 
 export function AddButton(buttonId: string,
     client?: Client, 

@@ -1,11 +1,12 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, RemovePlayerButtonConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import { addRoleUser } from "../functions/applyToGame";
 import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../functions/gameDetails";
 import { AddModal } from "../modals/_modals";
 import { AddAppAcceptedToNotion } from "../notion/applicationAccepted";
 import { Button } from "./_button";
+import { AddButton } from "./_buttons";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {    
     return new ButtonBuilder()
@@ -42,8 +43,12 @@ async function execute(client: Client, interaction: Interaction) {
                 embed.fields.push({
                     name: AcceptApplicationButtonConstants.STATUS_ID,
                     value: AcceptApplicationButtonConstants.STATUS_MESSAGE
-                });            
-                await interaction.message.edit({embeds:[embed], components: []});                
+                });
+                
+                const acceptButton = AddButton(RemovePlayerButtonConstants.ID, undefined, undefined, userId + GlobalConstants.ID_SEPARATOR + messageId)
+                const row = new ActionRowBuilder<ButtonBuilder>().addComponents([acceptButton!]);
+
+                await interaction.message.edit({embeds:[embed], components: [row!]});                
                 await incrementAcceptedCount(interaction.channel!, messageId)
                 user.send(AcceptApplicationButtonConstants.MESSAGE_PERSONAL + game.gameName);
 
