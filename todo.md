@@ -4,6 +4,7 @@ This uses [TodoMD](https://marketplace.visualstudio.com/items?itemName=usernameh
 (A) Send a copy of the app to DMs +Feature #requested {cm:2023-01-29}
 (A) Clip application words, test a lot of letters, this leads to a bug +Bug #testing {cm:2022-12-22}
 (A) Remove Use of GameDetails - Use the embed instead +Housekeeping
+(A) Find a better way to get game embed while accepting an app, the current one relies on two operations to get channel and message - Use the embed instead +Housekeeping
 
 (B) Submitting twice? Why? +Bug  #testing {cm:2022-12-22}
 (B) Edit Application +Feature  #testing {cm:2022-12-22}
@@ -14,6 +15,7 @@ This uses [TodoMD](https://marketplace.visualstudio.com/items?itemName=usernameh
 (B) Revisit Notion Logging +Feature
 (B) Better Logging +Housekeeping
 (B) Add a separate channel to keep track of all active applications +Feature
+(B) Pause Application porcess - move application +Feature
 
 (C) Give role to DM as soon as app is created +Feature #testing {cm:2022-12-22}
 (C) Count for accepted users +Feature #testing {cm:2022-12-22}

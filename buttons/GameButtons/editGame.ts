@@ -7,7 +7,7 @@ import { Button } from "../_button";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
     return new ButtonBuilder()
-            .setCustomId(EditGameButtonConstants.ID + GlobalConstants.ID_SEPARATOR + id)
+            .setCustomId(EditGameButtonConstants.ID)
             .setLabel(EditGameButtonConstants.TITLE)
             .setStyle(ButtonStyle.Secondary)
 }

@@ -1,7 +1,7 @@
 import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, TextBasedChannel, APIEmbedField } from "discord.js";
 import { ApplyToGameModalConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
-import { gameApplicationEmbed } from "../functions/applyToGame";
+import { gameApplicationEmbed } from "../functions/GameApplications/appEmbed";
 import { Modal } from "./_modal";
 import { Guid } from "guid-typescript";
 import { AddAppCreatedToNotion } from "../notion/applicationCreated";
@@ -41,10 +41,8 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
     // This can be mitigated by only storing one such event (doesn't matter if first one, the submitted will always have latest info anyway)
     // Chainging Modal Id works, but it's a bad workaround, especially because it doesn't save your details
     if (interaction.isButton()){
-        //TASK: Deprecate this in Stage 3
         const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-        const threadId = ids[1]
-        const messageId = ids[2]
+        const applicationThreadId = ids[1]
         const submitted = await interaction.awaitModalSubmit({
             time: 60000 * 30,
             filter: i => i.user.id === interaction.user.id
@@ -56,34 +54,27 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
         if (submitted) {
             try {              
                 const game = getEmbedDetails(interaction.message)
-                const thread = await client.channels.fetch(threadId) as TextBasedChannel
-
                 log(interaction, game)
 
+                const thread = await client.channels.fetch(applicationThreadId) as TextBasedChannel
                 var answers: APIEmbedField[] = []
                 game.questions.split('\n').forEach((value, index) => {
                     answers.push({
                         name: value,
                         value: submitted.fields.getTextInputValue(index+value.replace(/[^a-zA-Z]/g, "").substring(0,40))
                     })
-                })
-
-                await gameApplicationEmbed(
-                    interaction.user,
-                    thread!,
-                    game.name,
-                    answers,
-                    [interaction.user.id, messageId].join(GlobalConstants.ID_SEPARATOR))
-
-                interaction.user.send(ApplyToGameModalConstants.DM + game.name)
+                })                
+                await gameApplicationEmbed(interaction.message, interaction.user, thread!, game.name, answers)
+                
                 if (!submitted.replied) {
                     await submitted.reply({
-                        content: ApplyToGameModalConstants.DM + game.name,
+                        content: ApplyToGameModalConstants.USER_MESSAGE + game.name,
                         ephemeral: true
                     })
                 }                
+                interaction.user.send(ApplyToGameModalConstants.USER_MESSAGE + game.name)
 
-                AddAppCreatedToNotion(interaction.user.username,messageId)
+                AddAppCreatedToNotion(interaction.user.username,applicationThreadId)
             }
             catch (e) {
                 console.error(e)

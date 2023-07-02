@@ -30,7 +30,7 @@ export async function createApplicationThread(channel: TextChannel,
     //NOTE: This is read in getGameValues. Don't modify without changing that function
     //This is just a cheap ass way of saving DB money
     var message = await thread.send(["0", gameName, dm, role, questions].join('\n'))
-    return [thread.id, message.id].join(GlobalConstants.ID_SEPARATOR)
+    return message
 }
 
 export function getGameFormat(gameDetails: string){

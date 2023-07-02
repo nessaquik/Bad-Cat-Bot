@@ -70,11 +70,6 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const template = submitted.fields.getTextInputValue(CreateGameModalConstants.TEMPLATE_ID)
                 const questions = submitted.fields.getTextInputValue(CreateGameModalConstants.QUESTIONS_ID)
 
-                const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
-                const threadId = ids[1]
-                const messageId = ids[2]
-
-                await editGameDetails(client, threadId, messageId, name, questions)
                 await editGameEmbed(interaction.message, name, desc, template, questions)
 
                 await submitted.reply({

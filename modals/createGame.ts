@@ -2,13 +2,12 @@ import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver
 import { CreateGameChannelConstants, CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CreateGameTemplate, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
-import { addRole as addRoleToUserId } from "../functions/applyToGame";
 import { createDiscussionThread, createApplicationThread, getGameFormat } from "../functions/CreateGame/gameBase";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 import { createGameLocation } from "../functions/CreateGame/gameLocation";
 import { sendGameEmbed } from "../functions/CreateGame/gameEmbed";
-import { addUserToChannel, createRole } from "../functions/Base/baseFunctions";
+import { addRoleToUserId, addUserToChannel, createRole } from "../functions/_Base/commonMethods";
 
 function GetModal(client: Client, interaction: Interaction, id?: string) {
     if (interaction.isChatInputCommand()){
@@ -95,11 +94,11 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 await addRoleToUserId(dmId, role, client, interaction); 
                 await addUserToChannel(dmId, channel);
                 const threadURL = await createDiscussionThread(channel, name, dmId)
-                const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
+                const gameDetailsMessage = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 var gameLocation = await createGameLocation(interaction, gameFormat, name, role)
-                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, id, threadURL)
+                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, gameDetailsMessage.channelId, threadURL)
                                
-                AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
+                AddGameToNotion(gameDetailsMessage.channelId, name, dm?.username!, gameFormat)
             }
             catch (e) {
                 console.error(e)
