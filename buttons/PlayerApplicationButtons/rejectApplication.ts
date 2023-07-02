@@ -1,9 +1,9 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Embed, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
-import { GlobalConstants } from "../constants/global";
-import { GameDetails, getGameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
-import { AddModal } from "../modals/_modals";
-import { Button } from "./_button";
+import { ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
+import { RejectApplicationButtonConstants } from "../../constants/gameApplication";
+import { GlobalConstants } from "../../constants/global";
+import { GameDetails, getGameDetailsFromThread } from "../../functions/gameDetails";
+import { Button } from "../_button";
+import { isDMorUser } from "../../functions/Base/baseFunctions";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
     return new ButtonBuilder()
@@ -24,13 +24,9 @@ async function execute(client: Client, interaction: Interaction) {
             var embed = interaction.message.embeds[0]
             var user = await client.users.fetch(userId);
             
-            if (interaction.user.id != game.dm && interaction.user.id != user.id){
-                await interaction.reply({
-                    content: RejectApplicationButtonConstants.PERMISSION,
-                    ephemeral: true
-                });
-            }
-            else{
+            var isOperationAllowed = await isDMorUser(game,user,interaction) 
+
+            if (isOperationAllowed){
                 embed.fields.push({
                     name: "\u200B",
                     value: "\u200B"

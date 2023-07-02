@@ -19,11 +19,14 @@ export abstract class CreateGameThreadConstants{
 
 export abstract class CreateGameEmbedConstants{
     static readonly EMBED_COLOR = "#9B59B6"
-    static readonly FOOTER = 'Chief of Operations, at your service!'
+    static readonly FOOTER = 'If I am unavailable, it is probably Shabbos!'
     static readonly DM = "DM"
     static readonly GAME_DETAILS = "Game Details"
     static readonly APPLICATION = "Application"
     static readonly THREAD = "Got Questions?"
+    static readonly CHANNEL = "Game Channel"
+    static readonly ROLE = "Role"
+    static readonly UNAVAILABLE = "*Oops, I don't have this information. Go bother the DM*"
 }
 
 

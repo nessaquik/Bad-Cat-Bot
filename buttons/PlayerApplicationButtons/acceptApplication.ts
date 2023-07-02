@@ -1,12 +1,13 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, RemovePlayerButtonConstants } from "../constants/gameApplication";
-import { GlobalConstants } from "../constants/global";
-import { addRoleUser } from "../functions/applyToGame";
-import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../functions/gameDetails";
-import { AddModal } from "../modals/_modals";
-import { AddAppAcceptedToNotion } from "../notion/applicationAccepted";
-import { Button } from "./_button";
-import { AddButton } from "./_buttons";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, ApplyGameButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
+import { GlobalConstants } from "../../constants/global";
+import { addRoleUser } from "../../functions/applyToGame";
+import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../../functions/gameDetails";
+import { AddModal } from "../../modals/_modals";
+import { AddAppAcceptedToNotion } from "../../notion/applicationAccepted";
+import { Button } from "../_button";
+import { AddButton } from "../_buttons";
+import { isDM } from "../../functions/Base/baseFunctions";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {    
     return new ButtonBuilder()
@@ -24,14 +25,9 @@ async function execute(client: Client, interaction: Interaction) {
             const messageId = ids[2]
             
             var game: GameDetails = await getGameDetailsFromThread(interaction.channel!, messageId)
+            var isOperationAllowed = await isDM(game,interaction) 
 
-            if (interaction.user.id != game.dm){
-                await interaction.reply({
-                    content: AcceptApplicationButtonConstants.PERMISSION,
-                    ephemeral: true
-                });
-            }
-            else{
+            if (isOperationAllowed){
                 var user = await client.users.fetch(userId);
                 await addRoleUser(user, game.role, client, interaction);        
                 

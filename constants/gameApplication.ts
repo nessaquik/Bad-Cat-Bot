@@ -19,14 +19,12 @@ export abstract class PauseGameButtonConstants{
 export abstract class PlayGameButtonConstants{
     static readonly ID = "enable-game"
     static readonly TITLE = "Allow Applications"
-    static readonly PERMISSIONS = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE = "Applications are reenabled"
 }
 
 export abstract class AcceptApplicationButtonConstants{
     static readonly ID = "accept-application"
     static readonly TITLE = "Accept Application"
-    static readonly PERMISSION = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE_DM = "Application Accepted - "
     static readonly MESSAGE_PERSONAL = "Hey! Welcome to "
     static readonly STATUS_ID = "Status"
@@ -36,7 +34,6 @@ export abstract class AcceptApplicationButtonConstants{
 export abstract class RejectApplicationButtonConstants{
     static readonly ID = "reject-application"
     static readonly TITLE = "Reject/Rescind"
-    static readonly PERMISSION = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE_DM = "Application Rejected - "
     static readonly MESSAGE_DM_RESCIND = "Application Rescinded - "
     static readonly MESSAGE_PERSONAL = "Sorry, the DM decided to go with someone else for "
@@ -48,7 +45,6 @@ export abstract class RejectApplicationButtonConstants{
 export abstract class RemovePlayerButtonConstants{
     static readonly ID = "remove-player"
     static readonly TITLE = "Remove Player"
-    static readonly PERMISSION = "AYO! You are SO NOT the DM!"
     static readonly MESSAGE_DM = "Application Removed - "
     static readonly MESSAGE_PERSONAL = "Sorry, the DM decided to go with someone else for "
     static readonly STATUS_ID = "Status"

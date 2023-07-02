@@ -1,11 +1,14 @@
-import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, RoleCreateOptions, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, RoleManager } from "discord.js";
+import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, RoleCreateOptions, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, RoleManager, ChannelMention } from "discord.js";
 import { CreateGameChannelConstants, CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
-import { CREATE_GAME_TEMPLATE, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
+import { CreateGameTemplate, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
-import { addRole } from "../functions/applyToGame";
-import { createDiscussionThread, createApplicationThread, sendGameEmbed, addUserToChannel, getGameFormat, createOneshotChannel, createCampaignChannel } from "../functions/createGame";
+import { addRole as addRoleToUserId } from "../functions/applyToGame";
+import { createDiscussionThread, createApplicationThread, getGameFormat } from "../functions/CreateGame/gameBase";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
+import { createGameLocation } from "../functions/CreateGame/gameLocation";
+import { sendGameEmbed } from "../functions/CreateGame/gameEmbed";
+import { addUserToChannel, createRole } from "../functions/Base/baseFunctions";
 
 function GetModal(client: Client, interaction: Interaction, id?: string) {
     if (interaction.isChatInputCommand()){
@@ -27,7 +30,7 @@ function GetModal(client: Client, interaction: Interaction, id?: string) {
         const gameTemplate = new TextInputBuilder()
             .setCustomId(CreateGameModalConstants.TEMPLATE_ID)
             .setLabel(CreateGameModalConstants.TEMPLATE_LABEL)
-            .setValue(CREATE_GAME_TEMPLATE.join(GAME_DETAILS_SEPARATOR + "\n"))
+            .setValue(CreateGameTemplate.join(GAME_DETAILS_SEPARATOR + "\n"))
             .setStyle(TextInputStyle.Paragraph)
             .setMaxLength(1024)
 
@@ -67,12 +70,13 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const desc = submitted.fields.getTextInputValue(CreateGameModalConstants.DESC_ID)
                 const template = submitted.fields.getTextInputValue(CreateGameModalConstants.TEMPLATE_ID)
                 const questions = submitted.fields.getTextInputValue(CreateGameModalConstants.QUESTIONS_ID)
+                var gameFormat = getGameFormat(template)
 
                 const dm = interaction.options.getUser(CreateGameConstants.DM_OPTION)
                 const dmId: string = dm?.id || ''
                 const dmEmbed: string = dm?.toString() || ''
                 const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
-                var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''                
+                var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
 
                 if (!submitted.replied) {
                     await submitted.reply({
@@ -81,43 +85,21 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                     })
                 }
 
-                if (role == ''){
-                    var roleOptions: RoleCreateOptions = {}
-                    roleOptions.name = name.replace(/[^a-zA-Z0-9 ]/g, '');;
-                    var roleManager = interaction.guild?.roles as RoleManager
-                    var newRole = await roleManager.create(roleOptions)
-                    role = newRole?.name || ''
-                }
-
                 var channel = interaction.channel as TextChannel
 
-                await addRole(dmId, role, client, interaction); 
+                //Create a role if one is not specified
+                if (role == '' && interaction.guild){
+                    var newRole = await createRole(interaction.guild, name)
+                    role = newRole?.name || ''
+                }
+                await addRoleToUserId(dmId, role, client, interaction); 
                 await addUserToChannel(dmId, channel);
                 const threadURL = await createDiscussionThread(channel, name, dmId)
                 const id = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
-                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, id, threadURL)
-                
-                var gameFormat = getGameFormat(template)                
+                var gameLocation = await createGameLocation(interaction, gameFormat, name, role)
+                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, id, threadURL)
+                               
                 AddGameToNotion(id.split(GlobalConstants.ID_SEPARATOR)[1], name, dm?.username!, gameFormat)
-                
-                //Create One shot channel
-                if (gameFormat.toLowerCase().indexOf("oneshot") !== -1 && interaction.guild != null) { 
-                    console.log("Creating channel")
-                    var channel = await createOneshotChannel(interaction.guild, name, role)
-                    interaction.channel?.send({
-                        content: CreateGameChannelConstants.OS_CHANNEL_CREATED + channel.toString()
-                    })
-                    console.log("Channel created for "+name)
-                }
-                //Create campaign category if not ongoing
-                else if (gameFormat.toLowerCase().indexOf("ongoing") == -1 && interaction.guild != null) { 
-                    console.log("Creating campaign category")
-                    var channel = await createCampaignChannel(interaction.guild, name, role)
-                    interaction.channel?.send({
-                        content: CreateGameChannelConstants.CAMAPIGN_CHANNEL_CREATED + channel.toString()
-                    })
-                    console.log("Category created for "+name)
-                }
             }
             catch (e) {
                 console.error(e)

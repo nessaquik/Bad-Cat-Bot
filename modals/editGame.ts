@@ -1,14 +1,13 @@
-import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType } from "discord.js";
-import { CreateGameConstants, CreateGameModalConstants, EditGameModalConstants } from "../constants/createGame";
+import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
+import { CreateGameModalConstants, EditGameModalConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
-import { addRole } from "../functions/applyToGame";
-import { getGameEmbed, editGameEmbed } from "../functions/createGame";
-import { editGameDetails, GameDetails, getGameDetails } from "../functions/gameDetails";
+import { editGameDetails } from "../functions/gameDetails";
 import { Modal } from "./_modal";
+import { getGameValues, editGameEmbed } from "../functions/CreateGame/gameEmbed";
 
 function GetModal(client: Client, interaction: Interaction, id?: string) {
     if (interaction.isButton()){
-        const values = getGameEmbed(interaction.message)
+        const values = getGameValues(interaction.message)
         const modal = new ModalBuilder()
             .setCustomId(EditGameModalConstants.ID+ GlobalConstants.ID_SEPARATOR +id)
             .setTitle(EditGameModalConstants.MODAL_TITLE)
@@ -70,14 +69,13 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const desc = submitted.fields.getTextInputValue(CreateGameModalConstants.DESC_ID)
                 const template = submitted.fields.getTextInputValue(CreateGameModalConstants.TEMPLATE_ID)
                 const questions = submitted.fields.getTextInputValue(CreateGameModalConstants.QUESTIONS_ID)
-                const values = getGameEmbed(interaction.message)
 
                 const ids = interaction.customId.split(GlobalConstants.ID_SEPARATOR)
                 const threadId = ids[1]
                 const messageId = ids[2]
 
                 await editGameDetails(client, threadId, messageId, name, questions)
-                await editGameEmbed(interaction.message, name, desc, template, questions, values[2])
+                await editGameEmbed(interaction.message, name, desc, template, questions)
 
                 await submitted.reply({
                     content: EditGameModalConstants.REPLY,

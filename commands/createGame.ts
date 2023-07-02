@@ -34,7 +34,6 @@ async function execute(client: Client, interaction: ChatInputCommandInteraction)
 function log(interaction: ChatInputCommandInteraction){
     const dm = interaction.options.getUser(CreateGameConstants.DM_OPTION)
     const dmId: string = dm?.id || ''
-    const dmEmbed: string = dm?.toString() || ''
     const role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
     const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
     console.log("Command used by " + interaction.user.username + " Command options " + [dmId, role, ispublic].join(", "))

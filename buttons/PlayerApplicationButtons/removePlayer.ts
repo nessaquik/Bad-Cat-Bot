@@ -1,10 +1,11 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Embed, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RemovePlayerButtonConstants, ApplyGameButtonConstants } from "../constants/gameApplication";
-import { GlobalConstants } from "../constants/global";
-import { GameDetails, getGameDetails, getGameDetailsFromThread } from "../functions/gameDetails";
-import { AddModal } from "../modals/_modals";
-import { Button } from "./_button";
-import { removeRoleUser } from "../functions/applyToGame";
+import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RemovePlayerButtonConstants, ApplyGameButtonConstants } from "../../constants/gameApplication";
+import { GlobalConstants } from "../../constants/global";
+import { GameDetails, getGameDetailsFromThread } from "../../functions/gameDetails";
+import { AddModal } from "../../modals/_modals";
+import { Button } from "../_button";
+import { removeRoleUser } from "../../functions/applyToGame";
+import { isDM } from "../../functions/Base/baseFunctions";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
     return new ButtonBuilder()
@@ -25,13 +26,9 @@ async function execute(client: Client, interaction: Interaction) {
             var embed = interaction.message.embeds[0]
             var user = await client.users.fetch(userId);
             
-            if (interaction.user.id != game.dm){
-                await interaction.reply({
-                    content: RemovePlayerButtonConstants.PERMISSION,
-                    ephemeral: true
-                });
-            }
-            else{
+            var isOperationAllowed = await isDM(game,interaction) 
+
+            if (isOperationAllowed){
                 var user = await client.users.fetch(userId);
                 await removeRoleUser(user, game.role, client, interaction); 
 

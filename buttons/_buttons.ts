@@ -1,12 +1,12 @@
 import { Client, ChatInputCommandInteraction, Interaction } from "discord.js";
-import { AcceptApplication } from "./acceptApplication";
-import { ApplyGame } from "./applyGame";
-import { EditGame } from "./editGame";
-import { PauseGame } from "./pauseApplications";
-import { PlayGame } from "./playApplications";
-import { RejectApplication } from "./rejectApplication";
+import { AcceptApplication } from "./PlayerApplicationButtons/acceptApplication";
+import { ApplyGame } from "./GameButtons/applyGame";
+import { EditGame } from "./GameButtons/editGame";
+import { PauseGame } from "./GameButtons/pauseApplications";
+import { PlayGame } from "./GameButtons/playApplications";
+import { RejectApplication } from "./PlayerApplicationButtons/rejectApplication";
 import { Button } from "./_button"
-import { RemovePlayer } from "./removePlayer";
+import { RemovePlayer } from "./PlayerApplicationButtons/removePlayer";
 
 export const Buttons = new Map<string, Button>()
 Buttons.set(ApplyGame.id, ApplyGame)

@@ -6,4 +6,5 @@ export abstract class GlobalConstants {
     static readonly ERROR_TEMP = "Hi! If you're seeing this, I am running in damage control mode. The error threshold was crossed in the past hour. It's likely that something is wrong with whatever you are trying to do. Everything else should be working fine. Just don't touch it again. Rivka will try and fix it after Passover. If you'd like to debug this on your own, `@Formulate` to learn more."
     static readonly ID_SEPARATOR = '_'
     static readonly Permissions = PermissionFlagsBits.ModerateMembers
+    static readonly NOT_THE_DM = "AYO! You are SO NOT the DM!"
 }
