@@ -44,7 +44,7 @@ export abstract class RemovePlayerButtonConstants{
     static readonly ID = "remove-player"
     static readonly TITLE = "Remove Player"
     static readonly MESSAGE_DM = "Application Removed - "
-    static readonly MESSAGE_PERSONAL = "Sorry, the DM decided to go with someone else for "
+    static readonly MESSAGE_PERSONAL = "You were removed from "
     static readonly STATUS_MESSAGE = "This player has been removed"
 }
 

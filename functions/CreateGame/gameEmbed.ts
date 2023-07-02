@@ -30,6 +30,7 @@ export function getEmbedDetails(message: Message) {
         questions:fieldsMap.get(CreateGameEmbedConstants.APPLICATION)!,
         role: fieldsMap.get(CreateGameEmbedConstants.ROLE)!,
         channel: fieldsMap.get(CreateGameEmbedConstants.CHANNEL)!,
+        acceptedUserCount: parseInt(fieldsMap.get(CreateGameEmbedConstants.ACCEPTED_COUNT)!),
         discussionThreadUrl: embed.url!,
     }
     return gameEmbedDetails;
@@ -54,6 +55,7 @@ export async function sendGameEmbed(channel: TextChannel,
         questions:questions,
         role: role,
         channel: gameChannel ? gameChannel.toString() : CreateGameEmbedConstants.UNAVAILABLE,
+        acceptedUserCount: 0,
         discussionThreadUrl: threadURL,
     }
 
@@ -67,15 +69,19 @@ export async function editGameEmbed(message: Message,
     desc: string,
     template: string,
     questions: string) {
-        console.log("game edited now2")
     const game = getEmbedDetails(message)
     game.name = gameName
     game.description = desc
     game.template = template
     game.questions = questions
 
-    console.log("game edited now")
+    const embed= buildEmbed(game)
+    await message.edit({embeds: [embed]})
+}
 
+export async function changeAcceptedCount(message: Message, increment: boolean) {
+    const game = getEmbedDetails(message)
+    game.acceptedUserCount = game.acceptedUserCount + (increment ? 1 : -1)
     const embed= buildEmbed(game)
     await message.edit({embeds: [embed]})
 }
@@ -118,9 +124,15 @@ function buildEmbed(embedDetails: GameEmbedDetails){
         { name: CreateGameEmbedConstants.DM, value: embedDetails.dm },
         { name: CreateGameEmbedConstants.GAME_DETAILS, value: embedDetails.template },
         { name: CreateGameEmbedConstants.APPLICATION, value: embedDetails.questions },
-        { name: CreateGameEmbedConstants.CHANNEL, value: embedDetails.channel },
-        { name: CreateGameEmbedConstants.ROLE, value: embedDetails.role },
         { name: CreateGameEmbedConstants.THREAD, value: "[See Discussion Thread]("+embedDetails.discussionThreadUrl+")" }];
+
+    if (embedDetails.role){
+        fields = fields.concat(
+        { name: "\u200B", value: "\u200B"},
+        { name: CreateGameEmbedConstants.CHANNEL, value: embedDetails.channel, inline: true },
+        { name: CreateGameEmbedConstants.ROLE, value: embedDetails.role, inline: true },
+        { name: CreateGameEmbedConstants.ACCEPTED_COUNT, value: embedDetails.acceptedUserCount.toString(), inline: true })
+    }
 
     return new EmbedBuilder()
         .setTitle(embedDetails.name)
@@ -161,5 +173,6 @@ export interface GameEmbedDetails {
     questions: string;
     role: string;
     channel: string,
+    acceptedUserCount: number,
     discussionThreadUrl: string,
 }

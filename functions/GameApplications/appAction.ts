@@ -1,4 +1,4 @@
-import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, PartialTextBasedChannelFields, TextBasedChannel, TextChannel, ThreadAutoArchiveDuration, User, Integration } from 'discord.js';
+import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, PartialTextBasedChannelFields, TextBasedChannel, TextChannel, ThreadAutoArchiveDuration, User, Integration, Message } from 'discord.js';
 import { AddButton } from "../../buttons/_buttons";
 import {  CreateGameEmbedConstants, CreateGameThreadConstants } from "../../constants/createGame";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
@@ -7,7 +7,8 @@ import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from ".
 import { AddAppAcceptedToNotion } from '../../notion/applicationAccepted';
 import { isDM_LEGACY, addRoleToUser, isDMorUser_LEGACY, removeRoleFromUser , ApplicationAction, isDMorUser, isDM} from '../_Base/commonMethods';
 import { getApplicationAuthorId, postActionApplicationEmbed } from './appEmbed';
-import { GameEmbedDetails, getEmbedDetails } from '../CreateGame/gameEmbed';
+import { GameEmbedDetails, changeAcceptedCount, getEmbedDetails } from '../CreateGame/gameEmbed';
+import { AcceptApplication } from '../../buttons/PlayerApplicationButtons/acceptApplication';
 
 export async function applicationAction(client: Client, 
     interaction: ButtonInteraction,
@@ -34,18 +35,18 @@ export async function applicationAction_NEW(client: Client,
 
         //TODO: This is a rather expensive operation, see if it can be reduced to one call
         const channel = await client.channels.fetch(channelId) as TextBasedChannel
-        const message = await channel.messages.fetch(messageId)
+        const gameEmbed = await channel.messages.fetch(messageId)
         
-        var game: GameEmbedDetails = await getEmbedDetails(message)
+        var game: GameEmbedDetails = await getEmbedDetails(gameEmbed)
         var userId = getApplicationAuthorId(interaction.message);
         var user = await client.users.fetch(userId!);
         var isOperationAllowed = action == ApplicationAction.Reject ? await isDMorUser(game,user,interaction) : await isDM(game,interaction) 
 
         if (isOperationAllowed){
-            await assignRoles(user, game.role, client, interaction, action)
-            await postActionApplicationEmbed(action, interaction.message)                                    
-            //TODO: Increment count
-            await sendAcknowledgement(user, game.name, interaction, action)            
+            await assignRoles(user, game.role, client, interaction, action)                                          
+            await sendAcknowledgement(user, game.name, interaction, action) 
+            await postActionApplicationEmbed(action, interaction.message) 
+            await changeAcceptedUserCount(gameEmbed, action)              
             LogToNotion(user, interaction, action)
         }
 }
@@ -62,6 +63,16 @@ async function assignRoles(user: User,
         }
         else if (action == ApplicationAction.Remove){
             await removeRoleFromUser(user, role, client, interaction)
+        }
+}
+
+async function changeAcceptedUserCount(gameEmbed: Message,
+    action: ApplicationAction){
+        if (action == ApplicationAction.Accept){
+            await changeAcceptedCount(gameEmbed, true)
+        }
+        else if (action == ApplicationAction.Remove){
+            await changeAcceptedCount(gameEmbed, false)
         }
 }
 

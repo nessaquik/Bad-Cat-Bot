@@ -94,11 +94,11 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 await addRoleToUserId(dmId, role, client, interaction); 
                 await addUserToChannel(dmId, channel);
                 const threadURL = await createDiscussionThread(channel, name, dmId)
-                const gameDetailsMessage = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
+                const applicationThread = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 var gameLocation = await createGameLocation(interaction, gameFormat, name, role)
-                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, gameDetailsMessage.channelId, threadURL)
+                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, applicationThread.id, threadURL)
                                
-                AddGameToNotion(gameDetailsMessage.channelId, name, dm?.username!, gameFormat)
+                AddGameToNotion(applicationThread.id, name, dm?.username!, gameFormat)
             }
             catch (e) {
                 console.error(e)

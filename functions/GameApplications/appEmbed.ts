@@ -46,14 +46,19 @@ export async function postActionApplicationEmbed(action: ApplicationAction, mess
 
     var statusMessage = getApplicationActionStatusField(action)
     var embed = message.embeds[0]
-    embed.fields.push({
-        name: "\u200B",
-        value: "\u200B"
-    });
-    embed.fields.push({
-        name: GameApplicationEmbedConstants.STATUS,
-        value: statusMessage
-    });
+    var hasStatus = false
+
+    for (var field of embed.fields){
+        if (field.name == GameApplicationEmbedConstants.STATUS){
+            hasStatus = true
+            field.value = statusMessage
+        }
+    }
+    
+    if (!hasStatus){
+        embed.fields.push({ name: "\u200B", value: "\u200B" });
+        embed.fields.push({ name: GameApplicationEmbedConstants.STATUS, value: statusMessage });
+    }    
     
     if (action == ApplicationAction.Accept){
         const removePlayer = AddButton(RemovePlayerButtonConstants.ID, undefined, undefined, customId)

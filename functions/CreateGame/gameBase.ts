@@ -26,11 +26,7 @@ export async function createApplicationThread(channel: TextChannel,
         type: ispublic ? ChannelType.PublicThread : ChannelType.PrivateThread,
     })
     await thread.members.add(dm);
-
-    //NOTE: This is read in getGameValues. Don't modify without changing that function
-    //This is just a cheap ass way of saving DB money
-    var message = await thread.send(["0", gameName, dm, role, questions].join('\n'))
-    return message
+    return thread
 }
 
 export function getGameFormat(gameDetails: string){

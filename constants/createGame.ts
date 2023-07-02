@@ -25,7 +25,8 @@ export abstract class CreateGameEmbedConstants{
     static readonly APPLICATION = "Application"
     static readonly THREAD = "Got Questions?"
     static readonly CHANNEL = "Game Channel"
-    static readonly ROLE = "Role"
+    static readonly ROLE = "Game Role"
+    static readonly ACCEPTED_COUNT = "Accepted Users"
     static readonly UNAVAILABLE = "*Oops, I don't have this information. Go bother the DM*"
 }
 
