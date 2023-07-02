@@ -1,12 +1,9 @@
-import { GatewayIntentBits } from 'discord-api-types/v10'
-import DiscordJs, { Collection, Events, userMention } from 'discord.js'
-import path from "path";
-import dotenv from 'dotenv'
+import { GatewayIntentBits } from 'discord-api-types/v10';
+import DiscordJs, { Events } from 'discord.js';
+import dotenv from 'dotenv';
 import { Commands } from './commands/_commands';
 import { GlobalConstants } from './constants/global';
 import { Buttons } from './buttons/_buttons';
-import { Content, ID } from './constants/resources';
-import { Lisette } from './commands/lisette';
 dotenv.config()
 
 const client = new DiscordJs.Client({
@@ -44,7 +41,7 @@ client.on('interactionCreate', async (interaction) => {
         }
         catch(e){
             await interaction.reply({
-                content: GlobalConstants.ERROR_TEMP,
+                content: GlobalConstants.ERROR,
                 ephemeral: true
             })
         }
@@ -62,7 +59,7 @@ client.on('interactionCreate', async (interaction) => {
         catch(e){
             console.error(e)
             await interaction.reply({
-                content: GlobalConstants.ERROR_TEMP,
+                content: GlobalConstants.ERROR,
                 ephemeral: true
             })
         }
@@ -73,11 +70,11 @@ client.on('interactionCreate', async (interaction) => {
 })
 
 client.on(Events.MessageCreate, async (message) => {
-    if (message.mentions != null && message.mentions.users != null && message.author.id != ID.FORMULATE){
+    if (message.mentions != null && message.mentions.users != null && !message.author.bot){
         message.mentions.users.forEach(async (user) => {
-            // if (user.id==ID.FORMULATE && message.mentions.repliedUser?.id!=ID.FORMULATE){
-            //     message.reply(Responses.Pesach)
-            // }
+            if (user.id==client.user?.id){
+                message.reply(GlobalConstants.WELCOME)
+            }
         });
     }
 })

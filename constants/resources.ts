@@ -36,10 +36,6 @@ export abstract class LisetteReactions {
     ]
 }
 
-export class ID {
-    static readonly FORMULATE = "1053571349425172480"
-}
-
 export class Content {
     static readonly LISETTE = "lisette"
 }
