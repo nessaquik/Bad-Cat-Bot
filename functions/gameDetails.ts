@@ -12,16 +12,6 @@ export interface GameDetails {
     thread?: TextBasedChannel;
 }
 
-export async function getGameDetails(
-    client: Client, 
-    threadId: string,
-    messageId: string){
-    const thread = await client.channels.fetch(threadId) as TextBasedChannel
-
-    var game = await getGameDetailsFromThread(thread, messageId)
-    return game
-}
-
 export async function getGameDetailsFromThread(
     thread: TextBasedChannel, 
     messageId: string){

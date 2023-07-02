@@ -1,5 +1,5 @@
 import { GatewayIntentBits } from 'discord-api-types/v10';
-import DiscordJs, { Events } from 'discord.js';
+import DiscordJs, { ActivityType, Events } from 'discord.js';
 import dotenv from 'dotenv';
 import { Commands } from './commands/_commands';
 import { GlobalConstants } from './constants/global';

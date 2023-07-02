@@ -1,11 +1,10 @@
-import { TextChannel, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Message, ButtonInteraction, Client, APIEmbedField, UserMention, User, ButtonComponent } from "discord.js";
+import { TextChannel, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Message, ButtonInteraction, Client, APIEmbedField } from "discord.js";
 import { AddButton } from "../../buttons/_buttons";
 import { CreateGameEmbedConstants } from "../../constants/createGame";
 import { ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from "../../constants/global";
 import dotenv from 'dotenv';
-import { GameDetails, getGameDetails } from "../gameDetails";
-import { isDM, isDMNew } from "../Base/baseFunctions";
+import { isDMNew } from "../Base/baseFunctions";
 dotenv.config()
 
 export function getGameValues(message: Message) {
@@ -169,7 +168,7 @@ function getCustomId(message:Message){
     var firstRow = message.components[0]!
     var firstButton = firstRow.components[0]!
     const ids = firstButton.customId?.split(GlobalConstants.ID_SEPARATOR)
-    if (ids){
+    if (ids && ids.length > 1){
         const threadId = ids[1]
         const messageId = ids[2]
         return threadId+GlobalConstants.ID_SEPARATOR+messageId
