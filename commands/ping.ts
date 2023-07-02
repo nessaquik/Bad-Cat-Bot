@@ -1,4 +1,4 @@
-import { CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, Client, SlashCommandBuilder } from "discord.js";
 import { PingConstants } from "../constants/ping";
 import { Command } from "./_command";
 

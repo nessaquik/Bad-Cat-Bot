@@ -1,4 +1,4 @@
-import { Client, ChatInputCommandInteraction, ModalBuilder, Integration, CacheType, Interaction } from "discord.js";
+import { Client, ModalBuilder, Interaction } from "discord.js";
 
 export interface Modal
 {

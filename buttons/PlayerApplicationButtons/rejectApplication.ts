@@ -1,9 +1,8 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
 import { RejectApplicationButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from "../../constants/global";
-import { GameDetails, getGameDetailsFromThread } from "../../functions/gameDetails";
 import { Button } from "../_button";
-import { ApplicationAction, isDMorUser_LEGACY } from "../../functions/_Base/commonMethods";
+import { ApplicationAction } from "../../functions/_Base/commonMethods";
 import { applicationAction } from "../../functions/GameApplications/appAction";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
@@ -15,6 +14,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
+        log(interaction)
         await applicationAction(client, interaction, ApplicationAction.Reject)
     }
 }

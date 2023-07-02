@@ -1,7 +1,6 @@
 import { TextChannel, ChannelType } from "discord.js";
 import { CreateGameThreadConstants } from "../../constants/createGame";
 import { GameInfoHeader } from "../../constants/createGameDescription";
-import { GlobalConstants } from "../../constants/global";
 import dotenv from 'dotenv';
 dotenv.config()
 

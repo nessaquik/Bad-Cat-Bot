@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ChatInputCommandInteraction, Client, Interaction, ModalBuilder } from "discord.js";
+import { ButtonBuilder, ButtonInteraction, Client, Interaction } from "discord.js";
 
 export interface Button
 {

@@ -1,5 +1,5 @@
-import { ActionRowBuilder, Client, Interaction, CommandInteractionOptionResolver, ModalBuilder, SlashCommandBuilder, TextInputBuilder, TextInputStyle, RoleCreateOptions, ChatInputCommandInteraction, EmbedBuilder, ModalSubmitInteraction, TextBasedChannel, TextChannel, ChannelType, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, CacheType, RoleManager, ChannelMention } from "discord.js";
-import { CreateGameChannelConstants, CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
+import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, TextChannel } from "discord.js";
+import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CreateGameTemplate, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { createDiscussionThread, createApplicationThread, getGameFormat } from "../functions/CreateGame/gameBase";

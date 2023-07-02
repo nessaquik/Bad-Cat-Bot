@@ -1,10 +1,8 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Embed, Interaction, SlashCommandBuilder, User } from "discord.js";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RemovePlayerButtonConstants, ApplyGameButtonConstants } from "../../constants/gameApplication";
+import { ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
+import { RemovePlayerButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from "../../constants/global";
-import { GameDetails, getGameDetailsFromThread } from "../../functions/gameDetails";
-import { AddModal } from "../../modals/_modals";
 import { Button } from "../_button";
-import { ApplicationAction, isDM_LEGACY, removeRoleFromUser } from "../../functions/_Base/commonMethods";
+import { ApplicationAction } from "../../functions/_Base/commonMethods";
 import { applicationAction } from "../../functions/GameApplications/appAction";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
@@ -16,6 +14,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
+        log(interaction)
         await applicationAction(client, interaction, ApplicationAction.Remove)
     }
 }

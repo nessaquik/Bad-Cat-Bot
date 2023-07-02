@@ -1,4 +1,4 @@
-import { Client, ChatInputCommandInteraction, Interaction } from "discord.js"
+import { Client, Interaction } from "discord.js"
 import { ApplyToGame } from "./applyToGame"
 import { CreateGame } from "./createGame"
 import { EditGame } from "./editGame"

@@ -38,25 +38,3 @@ export async function incrementAcceptedCount(
     values.unshift((parseInt(values.shift() || "0") + 1).toString())
     await message.edit(values.join('\n'));
 }
-
-export async function editGameDetails(
-    client: Client, 
-    threadId: string,
-    messageId: string,
-    gameName: string,
-    questions: string){
-    const thread = await client.channels.fetch(threadId) as TextBasedChannel
-    const message = await thread.messages.fetch(messageId)
-    var values = message.content.split('\n')
-    var game: GameDetails = {
-        acceptedUsers: parseInt(values.shift() || "0"),
-        gameName: values.shift() || '',
-        dm: values.shift() || '',
-        role: values.shift() || '',
-        questions: values.slice(0,5),
-        messageId: messageId,
-        threadId: thread.id,
-        thread: thread,
-    }
-    await message.edit([game.acceptedUsers, gameName, game.dm, game.role, questions].join('\n'))
-}

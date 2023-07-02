@@ -1,7 +1,7 @@
-import { ActionRowBuilder, Client, CommandInteraction, ChatInputCommandInteraction, ModalBuilder, SlashCommandBuilder, SlashCommandUserOption, TextInputBuilder, TextInputStyle, PermissionFlagsBits } from "discord.js";
+import { Client, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
-import { AddModal, Modals } from "../modals/_modals";
+import { AddModal } from "../modals/_modals";
 import { Command } from "./_command";
 
 const command = new SlashCommandBuilder()

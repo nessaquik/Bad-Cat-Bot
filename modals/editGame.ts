@@ -1,7 +1,6 @@
 import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import { CreateGameModalConstants, EditGameModalConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
-import { editGameDetails } from "../functions/gameDetails";
 import { Modal } from "./_modal";
 import { getGameValues, editGameEmbed } from "../functions/CreateGame/gameEmbed";
 

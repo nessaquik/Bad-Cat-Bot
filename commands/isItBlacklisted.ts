@@ -1,4 +1,4 @@
-import { CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, Client, SlashCommandBuilder } from "discord.js";
 import { GlobalConstants } from "../constants/global";
 import { IsItBlacklistedConstants } from "../constants/IsItBlacklisted";
 import { FindUserInBlacklist } from "../notion/blacklistCheck";

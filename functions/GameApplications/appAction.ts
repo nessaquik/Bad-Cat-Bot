@@ -1,14 +1,11 @@
-import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonInteraction, Client, EmbedBuilder, Interaction, ModalSubmitInteraction, PartialTextBasedChannelFields, TextBasedChannel, TextChannel, ThreadAutoArchiveDuration, User, Integration, Message } from 'discord.js';
-import { AddButton } from "../../buttons/_buttons";
-import {  CreateGameEmbedConstants, CreateGameThreadConstants } from "../../constants/createGame";
-import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
+import { ButtonInteraction, Client, TextBasedChannel, User, Message } from 'discord.js';
+import { AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from "../../constants/global";
 import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../gameDetails";
 import { AddAppAcceptedToNotion } from '../../notion/applicationAccepted';
-import { isDM_LEGACY, addRoleToUser, isDMorUser_LEGACY, removeRoleFromUser , ApplicationAction, isDMorUser, isDM} from '../_Base/commonMethods';
+import { isDM_LEGACY, addRoleToUser, isDMorUser_LEGACY, removeRoleFromUser, ApplicationAction, isDMorUser, isDM } from '../_Base/commonMethods';
 import { getApplicationAuthorId, postActionApplicationEmbed } from './appEmbed';
 import { GameEmbedDetails, changeAcceptedCount, getEmbedDetails } from '../CreateGame/gameEmbed';
-import { AcceptApplication } from '../../buttons/PlayerApplicationButtons/acceptApplication';
 
 export async function applicationAction(client: Client, 
     interaction: ButtonInteraction,

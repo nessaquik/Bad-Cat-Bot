@@ -1,4 +1,4 @@
-import { CacheType, ChatInputCommandInteraction, Client, CommandInteraction, Interaction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, Client, SlashCommandBuilder } from "discord.js";
 import { LisetteReactionsConstants } from "../constants/lisetteReactions";
 import { LisetteReactions } from "../constants/resources";
 import { Command } from "./_command";

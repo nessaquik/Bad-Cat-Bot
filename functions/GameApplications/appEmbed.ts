@@ -1,10 +1,9 @@
-import { ActionRowBuilder, APIEmbedField, ButtonBuilder, ButtonInteraction, Client, EmbedBuilder, Interaction, Message, ModalSubmitInteraction, PartialTextBasedChannelFields, TextBasedChannel, TextChannel, ThreadAutoArchiveDuration, User } from "discord.js";
+import { ActionRowBuilder, APIEmbedField, ButtonBuilder, EmbedBuilder, Message, PartialTextBasedChannelFields, User } from "discord.js";
 import { AddButton } from "../../buttons/_buttons";
-import {  CreateGameEmbedConstants, CreateGameThreadConstants } from "../../constants/createGame";
+import { CreateGameEmbedConstants } from "../../constants/createGame";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from '../../constants/global';
 import { ApplicationAction, getCustomId, getIdFromMention } from "../_Base/commonMethods";
-import { RemovePlayer } from '../../buttons/PlayerApplicationButtons/removePlayer';
 
 export function getApplicationAuthorId(message: Message) {
     const embed = message.embeds[0]
