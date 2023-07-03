@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, TextBasedChannel, User, Message } from 'discord.js';
+import { ButtonInteraction, Client, User, Message, TextChannel } from 'discord.js';
 import { AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from "../../constants/global";
 import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../gameDetails";
@@ -31,7 +31,7 @@ export async function applicationAction_NEW(client: Client,
         const messageId = ids[2]
 
         //TODO: This is a rather expensive operation, see if it can be reduced to one call
-        const channel = await client.channels.fetch(channelId) as TextBasedChannel
+        const channel = await client.channels.fetch(channelId) as TextChannel
         const gameEmbed = await channel.messages.fetch(messageId)
         
         var game: GameEmbedDetails = await getEmbedDetails(gameEmbed)

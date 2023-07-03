@@ -12,9 +12,9 @@ This uses [TodoMD](https://marketplace.visualstudio.com/items?itemName=usernameh
 (B) Save modal on cancel using modalId +Feature  #difficult
 (B) Allows users to rescind applications - This might involve them just using the cancel button +Feature #requested {cm:2023-01-29}
 (B) Revisit Notion Logging +Feature
-(B) Better Console Logging +Housekeeping
-(B) Add a separate channel to keep track of all active applications +Feature
-(B) Pause Application process - move application +Feature
+(B) Better Console Logging +Housekeeping #upcoming
+(B) Add a separate channel to keep track of all active applications +Feature #upcoming
+(B) Pause Application process - move application +Feature {cm:2023-07-02}
 
 (C) Give role to DM as soon as app is created +Feature #testing {cm:2022-12-22}
 (C) Count for accepted users +Feature #testing {cm:2022-12-22}

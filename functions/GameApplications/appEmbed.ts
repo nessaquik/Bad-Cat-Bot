@@ -1,4 +1,4 @@
-import { ActionRowBuilder, APIEmbedField, ButtonBuilder, EmbedBuilder, Message, PartialTextBasedChannelFields, User } from "discord.js";
+import { ActionRowBuilder, APIEmbedField, ButtonBuilder, EmbedBuilder, Message, TextChannel, User } from "discord.js";
 import { AddButton } from "../../buttons/_buttons";
 import { CreateGameEmbedConstants } from "../../constants/createGame";
 import { GameApplicationEmbedConstants, AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
@@ -20,13 +20,12 @@ export function getApplicationAuthorId(message: Message) {
 
 export async function gameApplicationEmbed(message: Message,
     user: User,
-    thread: PartialTextBasedChannelFields,
+    thread: TextChannel,
     gameName: string,
     answers: APIEmbedField[]) {
     const embed = new EmbedBuilder()
         .setTitle(GameApplicationEmbedConstants.TITLE + gameName)
         .setColor(GameApplicationEmbedConstants.EMBED_COLOR)
-        //.setDescription(GameApplicationEmbedConstants.DESC + user.toString())
         .setAuthor({ name: user.username, iconURL: user.avatarURL()! })
         .addFields({name: GameApplicationEmbedConstants.SUBMITTED, value: user.toString()})
         .addFields(answers)

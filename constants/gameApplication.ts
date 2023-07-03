@@ -13,7 +13,8 @@ export abstract class EditGameButtonConstants{
 export abstract class PauseGameButtonConstants{
     static readonly ID = "pause-game"
     static readonly TITLE = "Pause Applications"
-    static readonly MESSAGE = "Applications for this game are paused"
+    static readonly DELETE_MESSAGE = "**DANGER ZONE!**\n\nIf you are done with the application, this button will delete this channel and all the discussions and applications contained inside. \nOnly click if you are sure you have no more use for it. \n**The data is irrecoverable.**"
+    static readonly MOVE_MESSAGE = "Moving the application to your game category"
 }
 
 export abstract class PlayGameButtonConstants{
@@ -22,6 +23,11 @@ export abstract class PlayGameButtonConstants{
     static readonly MESSAGE = "Applications are reenabled"
 }
 
+export abstract class DeleteGameButtonConstants{
+    static readonly ID = "delete-game"
+    static readonly TITLE = "I understand, DELETE ANYWAY"
+    static readonly MESSAGE = "Applications are being deleted"
+}
 export abstract class AcceptApplicationButtonConstants{
     static readonly ID = "accept-application"
     static readonly TITLE = "Accept Application"

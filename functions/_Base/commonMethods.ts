@@ -83,6 +83,14 @@ export function getIdFromMention(mention: string) {
 	return matches[1];
 }
 
+export function getChannelIdFromMention(mention: string) {
+	const matches = mention.match(/^<#!?(\d+)>$/);
+	if (!matches) return;
+
+	// The first element in the matches array will be the entire mention, not just the ID,
+	return matches[1];
+}
+
 export function getCustomId(message:Message){
     //This method is written this way because once upon a time, I made the stupid mistake of changing IDs hardcoded into the code.
     //Earlier, it used to be a combination of userId and a messageId referring to a message in the Applications channel

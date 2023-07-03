@@ -86,34 +86,12 @@ export async function changeAcceptedCount(message: Message, increment: boolean) 
     await message.edit({embeds: [embed]})
 }
 
-export async function editApplicationState(
-    client: Client, 
+export async function editEmbedState(
     interaction: ButtonInteraction,
     pause: boolean){
-        var buttons;
-        var game = getEmbedDetails(interaction.message)
-        var customid = getCustomId(interaction.message)
-
-        var isOperationAllowed = await isDM(game,interaction)                
-        if (isOperationAllowed){
-            if (pause){
-                //! NEED TO DEPRECATE - Switch to moving channels instead.
-                var user = await client.users.fetch(process.env.ADMINID ? process.env.ADMINID : "");
-                user.send(PauseGameButtonConstants.MESSAGE + ": " + game.name);
-
-                buttons = applicationPausedButtons(customid)
-            }
-            else {
-                buttons = applicationEnabledButtons(customid)
-            }
-
-            await interaction.message.edit({components: buttons})
-
-            await interaction.reply({
-                content: pause ? PauseGameButtonConstants.MESSAGE : PlayGameButtonConstants.MESSAGE,
-                ephemeral: true
-            });
-        }
+    var customid = getCustomId(interaction.message)
+    var buttons = pause ? applicationPausedButtons(customid) : applicationEnabledButtons(customid)
+    await interaction.message.edit({components: buttons})
 }
 
 

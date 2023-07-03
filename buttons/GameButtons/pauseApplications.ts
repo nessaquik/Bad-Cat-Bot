@@ -1,8 +1,9 @@
-import { ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
-import { PauseGameButtonConstants } from "../../constants/gameApplication";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
+import { DeleteGameButtonConstants, PauseGameButtonConstants } from "../../constants/gameApplication";
 import dotenv from 'dotenv';
 import { Button } from "../_button";
-import { editApplicationState } from "../../functions/CreateGame/gameEmbed";
+import { editGameState } from "../../functions/CreateGame/gameStatus";
+import { AddButton } from "../_buttons";
 dotenv.config()
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
@@ -15,7 +16,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
         log(interaction)
-        await editApplicationState(client, interaction, true)     
+        await editGameState(client, interaction, true)
     }
 }
 

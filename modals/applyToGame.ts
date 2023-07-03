@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, TextBasedChannel, APIEmbedField } from "discord.js";
+import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, TextChannel, APIEmbedField } from "discord.js";
 import { ApplyToGameModalConstants } from "../constants/gameApplication";
 import { GlobalConstants } from "../constants/global";
 import { gameApplicationEmbed } from "../functions/GameApplications/appEmbed";
@@ -56,7 +56,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const game = getEmbedDetails(interaction.message)
                 log(interaction, game)
 
-                const thread = await client.channels.fetch(applicationThreadId) as TextBasedChannel
+                const thread = await client.channels.fetch(applicationThreadId) as TextChannel
                 var answers: APIEmbedField[] = []
                 game.questions.split('\n').forEach((value, index) => {
                     answers.push({

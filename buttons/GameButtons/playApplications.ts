@@ -1,7 +1,7 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
 import { PlayGameButtonConstants } from "../../constants/gameApplication";
 import { Button } from "../_button";
-import { editApplicationState } from "../../functions/CreateGame/gameEmbed";
+import { editGameState } from "../../functions/CreateGame/gameStatus";
 
 function getButton(client?: Client, interaction?: Interaction, id?: string) {
     return new ButtonBuilder()
@@ -13,7 +13,7 @@ function getButton(client?: Client, interaction?: Interaction, id?: string) {
 async function execute(client: Client, interaction: Interaction) {
     if (interaction.isButton()){
         log(interaction)
-        await editApplicationState(client, interaction, false)      
+        await editGameState(client, interaction, false)      
     }
 }
 
