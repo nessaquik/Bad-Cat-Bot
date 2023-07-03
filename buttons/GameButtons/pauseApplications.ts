@@ -1,6 +1,5 @@
 import { ButtonBuilder, ButtonInteraction, ButtonStyle, Client, Interaction } from "discord.js";
 import { PauseGameButtonConstants } from "../../constants/gameApplication";
-import { GlobalConstants } from "../../constants/global";
 import dotenv from 'dotenv';
 import { Button } from "../_button";
 import { editApplicationState } from "../../functions/CreateGame/gameEmbed";

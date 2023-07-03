@@ -7,7 +7,7 @@ export async function createGameLocation(interaction: ChatInputCommandInteractio
     gameFormat: string, 
     name: string,
     role: string){ 
-    var channel
+    var channel = null
     
     //Create One shot channel
     if (gameFormat.toLowerCase().indexOf("oneshot") !== -1 && interaction.guild != null) { 

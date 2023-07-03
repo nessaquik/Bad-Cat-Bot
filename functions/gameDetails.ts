@@ -1,5 +1,4 @@
-import { Client, Interaction, TextBasedChannel, TextChannel } from "discord.js";
-import { GlobalConstants } from "../constants/global";
+import { TextBasedChannel } from "discord.js";
 
 export interface GameDetails {
     acceptedUsers: number;

@@ -59,7 +59,7 @@ export abstract class ApplyToGameModalConstants{
 export abstract class GameApplicationEmbedConstants{
     static readonly EMBED_COLOR = "#B4CEA7"
     static readonly FOOTER = 'Chief of Operations, at your service!'
-    static readonly TITLE = 'New Application for '
+    static readonly TITLE = 'Application for '
     static readonly DESC = 'Submitted by '
     static readonly STATUS = "Status"
     static readonly SUBMITTED = 'Submitted by'

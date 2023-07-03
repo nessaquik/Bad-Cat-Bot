@@ -63,7 +63,7 @@ export async function isDMorUser(
     game: GameEmbedDetails,
     user: User,
     interaction: ButtonInteraction){
-        if (interaction.user.id == game.dm || interaction.user.id == user.id){
+        if (interaction.user.id == getIdFromMention(game.dm) || interaction.user.id == user.id){
             return true;
         }
         else{

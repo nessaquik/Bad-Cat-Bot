@@ -1,4 +1,4 @@
-import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, TextChannel } from "discord.js";
+import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, TextChannel, Channel } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CreateGameTemplate, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
@@ -75,6 +75,8 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const dmId: string = dm?.id || ''
                 const dmEmbed: string = dm?.toString() || ''
                 const ispublic: boolean = interaction.options.getString(CreateGameConstants.PRIVACY_OPTION) == CreateGameConstants.PRIVACY_OPTION_PUBLIC
+                var gameLocation: Channel | null = interaction.options.getChannel(CreateGameConstants.CHANNEL_OPTION);
+                var hasLocationProvided = gameLocation != null
                 var role: string = interaction.options.getRole(CreateGameConstants.ROLE_OPTION)?.name || ''
 
                 if (!submitted.replied) {
@@ -95,8 +97,15 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 await addUserToChannel(dmId, channel);
                 const threadURL = await createDiscussionThread(channel, name, dmId)
                 const applicationThread = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
-                var gameLocation = await createGameLocation(interaction, gameFormat, name, role)
+                if (!gameLocation){
+                    gameLocation = await createGameLocation(interaction, gameFormat, name, role)!
+                }                
                 await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, applicationThread.id, threadURL)
+
+                //This is temporary to increase visibility of the option
+                if (gameFormat.toLowerCase().indexOf("ongoing") != -1 && !hasLocationProvided){
+                    channel.send(CreateGameConstants.PROMOTE_CHANNEL_USAGE)
+                }
                                
                 AddGameToNotion(applicationThread.id, name, dm?.username!, gameFormat)
             }

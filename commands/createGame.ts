@@ -1,4 +1,4 @@
-import { Client, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { Client, ChatInputCommandInteraction, SlashCommandBuilder, ChannelType } from "discord.js";
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { GlobalConstants } from "../constants/global";
 import { AddModal } from "../modals/_modals";
@@ -22,6 +22,11 @@ const command = new SlashCommandBuilder()
     .addRoleOption(option =>option
         .setName(CreateGameConstants.ROLE_OPTION)
         .setDescription(CreateGameConstants.ROLE_DESC)
+        .setRequired(false))
+    .addChannelOption(option =>option
+        .setName(CreateGameConstants.CHANNEL_OPTION)
+        .setDescription(CreateGameConstants.CHANNEL_DESC)
+        .addChannelTypes(ChannelType.GuildText)
         .setRequired(false))
     .setDefaultMemberPermissions(GlobalConstants.Permissions)
     .setDMPermission(false);

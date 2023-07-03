@@ -1,4 +1,4 @@
-import { TextChannel, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Message, ButtonInteraction, Client, APIEmbedField } from "discord.js";
+import { TextChannel, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Message, ButtonInteraction, Client, APIEmbedField, Channel } from "discord.js";
 import { AddButton } from "../../buttons/_buttons";
 import { CreateGameEmbedConstants } from "../../constants/createGame";
 import { ApplyGameButtonConstants, PauseGameButtonConstants, PlayGameButtonConstants, EditGameButtonConstants } from "../../constants/gameApplication";
@@ -43,7 +43,7 @@ export async function sendGameEmbed(channel: TextChannel,
     questions: string,
     dm: string,
     role: string,
-    gameChannel: TextChannel | undefined,
+    gameChannel: Channel | null,
     applicationThreadId: string,
     threadURL: string) {
 
@@ -130,8 +130,8 @@ function buildEmbed(embedDetails: GameEmbedDetails){
         fields = fields.concat(
         { name: "\u200B", value: "\u200B"},
         { name: CreateGameEmbedConstants.CHANNEL, value: embedDetails.channel, inline: true },
-        { name: CreateGameEmbedConstants.ROLE, value: embedDetails.role, inline: true },
-        { name: CreateGameEmbedConstants.ACCEPTED_COUNT, value: embedDetails.acceptedUserCount.toString(), inline: true })
+        { name: CreateGameEmbedConstants.ACCEPTED_COUNT, value: embedDetails.acceptedUserCount.toString(), inline: true },
+        { name: CreateGameEmbedConstants.ROLE, value: embedDetails.role, inline: true })
     }
 
     return new EmbedBuilder()

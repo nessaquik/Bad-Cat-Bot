@@ -5,11 +5,14 @@ export abstract class CreateGameConstants {
     static readonly DM_DESC = 'DM for the game'
     static readonly ROLE_OPTION = 'role';
     static readonly ROLE_DESC = 'Role to be added for accepted application'
+    static readonly CHANNEL_OPTION = 'channel';
+    static readonly CHANNEL_DESC = 'If you already have a channel or category for this game, pass it here or Formulate will create one';
     static readonly PRIVACY_OPTION = 'visbility';
     static readonly PRIVACY_DESC = 'Should the applications be publicaly visible'
     static readonly PRIVACY_OPTION_PUBLIC = 'public';
     static readonly PRIVACY_OPTION_PRIVATE = 'private';
     static readonly REPLY = 'Input parsed successfully, game is being created!'
+    static readonly PROMOTE_CHANNEL_USAGE = 'Hello Mx. game creator! I noticed this app is for an ongoing campaign.\nIf you know the category/channel for this campaign, consider using the channel option during create to provide a link to it'
 }
 
 export abstract class CreateGameThreadConstants{
@@ -27,7 +30,7 @@ export abstract class CreateGameEmbedConstants{
     static readonly CHANNEL = "Game Channel"
     static readonly ROLE = "Game Role"
     static readonly ACCEPTED_COUNT = "Accepted Users"
-    static readonly UNAVAILABLE = "*Oops, I don't have this information. Go bother the DM*"
+    static readonly UNAVAILABLE = "*Go bother the DM for it*"
 }
 
 
