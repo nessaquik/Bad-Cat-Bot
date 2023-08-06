@@ -30,7 +30,10 @@ export abstract class CreateGameEmbedConstants{
     static readonly CHANNEL = "Game Channel"
     static readonly ROLE = "Game Role"
     static readonly ACCEPTED_COUNT = "Accepted Users"
+    static readonly ABOUT_DM = "DM Info"
     static readonly UNAVAILABLE = "*Go bother the DM for it*"
+    static readonly SEE_DISCUSSION_THREAD = "See Discussion Thread"
+    static readonly ABOUT_DM_MESSAGE = "See DM Style"
 }
 
 

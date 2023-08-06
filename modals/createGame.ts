@@ -2,7 +2,7 @@ import { ActionRowBuilder, Client, Interaction, ModalBuilder, TextInputBuilder, 
 import { CreateGameConstants, CreateGameModalConstants } from "../constants/createGame";
 import { CreateGameTemplate, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
-import { createDiscussionThread, createApplicationThread, getGameFormat } from "../functions/CreateGame/gameBase";
+import { createDiscussionThread, createApplicationThread, getGameFormat, getAboutDMMessage } from "../functions/CreateGame/gameBase";
 import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 import { createGameLocation } from "../functions/CreateGame/gameLocation";
@@ -99,8 +99,9 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 const applicationThread = await createApplicationThread(channel, name, dmId, role, questions, ispublic)
                 if (!gameLocation){
                     gameLocation = await createGameLocation(interaction, gameFormat, name, role)!
-                }                
-                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, applicationThread.id, threadURL)
+                }
+                const aboutDMUrl: string = await getAboutDMMessage(client, dm?.id || '') || ''          
+                await sendGameEmbed(channel, name, desc, template, questions, dmEmbed, role, gameLocation, applicationThread.id, aboutDMUrl, threadURL)
 
                 //This is temporary to increase visibility of the option
                 if (gameFormat.toLowerCase().indexOf("ongoing") != -1 && !hasLocationProvided){

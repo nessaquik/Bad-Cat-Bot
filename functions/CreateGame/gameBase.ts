@@ -1,4 +1,4 @@
-import { TextChannel, ChannelType } from "discord.js";
+import { TextChannel, ChannelType, Client } from "discord.js";
 import { CreateGameThreadConstants } from "../../constants/createGame";
 import { GameInfoHeader } from "../../constants/createGameDescription";
 import dotenv from 'dotenv';
@@ -38,3 +38,14 @@ export function getGameFormat(gameDetails: string){
     return ""
 }
 
+export async function getAboutDMMessage(client: Client, dm: string){
+    const aboutDMChannel = client.channels.cache.get(process.env.ABOUTDMID!)  as TextChannel;
+    var aboutDMMessagURL
+    var messages = await aboutDMChannel.messages.fetch({ limit: 100})
+    messages.forEach(msg => {
+        if (msg.author.id === dm) {
+            aboutDMMessagURL = msg.url
+        }
+    });
+    return aboutDMMessagURL;
+}

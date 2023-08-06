@@ -31,6 +31,7 @@ export function getEmbedDetails(message: Message) {
         role: fieldsMap.get(CreateGameEmbedConstants.ROLE)!,
         channel: fieldsMap.get(CreateGameEmbedConstants.CHANNEL)!,
         acceptedUserCount: parseInt(fieldsMap.get(CreateGameEmbedConstants.ACCEPTED_COUNT)!),
+        aboutDMMessage: fieldsMap.get(CreateGameEmbedConstants.ABOUT_DM)!,
         discussionThreadUrl: embed.url!,
     }
     return gameEmbedDetails;
@@ -45,6 +46,7 @@ export async function sendGameEmbed(channel: TextChannel,
     role: string,
     gameChannel: Channel | null,
     applicationThreadId: string,
+    aboutDMURL: string,
     threadURL: string) {
 
     const game: GameEmbedDetails = {
@@ -56,6 +58,7 @@ export async function sendGameEmbed(channel: TextChannel,
         role: role,
         channel: gameChannel ? gameChannel.toString() : CreateGameEmbedConstants.UNAVAILABLE,
         acceptedUserCount: 0,
+        aboutDMMessage: aboutDMURL,
         discussionThreadUrl: threadURL,
     }
 
@@ -102,7 +105,8 @@ function buildEmbed(embedDetails: GameEmbedDetails){
         { name: CreateGameEmbedConstants.DM, value: embedDetails.dm },
         { name: CreateGameEmbedConstants.GAME_DETAILS, value: embedDetails.template },
         { name: CreateGameEmbedConstants.APPLICATION, value: embedDetails.questions },
-        { name: CreateGameEmbedConstants.THREAD, value: "[See Discussion Thread]("+embedDetails.discussionThreadUrl+")" }];
+        { name: CreateGameEmbedConstants.ABOUT_DM, value: embedDetails.aboutDMMessage ? "["+CreateGameEmbedConstants.ABOUT_DM_MESSAGE+"]("+embedDetails.aboutDMMessage+")" : CreateGameEmbedConstants.UNAVAILABLE },
+        { name: CreateGameEmbedConstants.THREAD, value: "["+CreateGameEmbedConstants.SEE_DISCUSSION_THREAD+"]("+embedDetails.discussionThreadUrl+")" }];
 
     if (embedDetails.role){
         fields = fields.concat(
@@ -152,5 +156,6 @@ export interface GameEmbedDetails {
     role: string;
     channel: string,
     acceptedUserCount: number,
+    aboutDMMessage: string,
     discussionThreadUrl: string,
 }
