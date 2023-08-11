@@ -72,8 +72,8 @@ client.on('interactionCreate', async (interaction) => {
 client.on(Events.MessageCreate, async (message) => {
     if (message.mentions != null && message.mentions.users != null && !message.author.bot){
         message.mentions.users.forEach(async (user) => {
-            if (user.id==client.user?.id){
-                message.reply(GlobalConstants.WELCOME)
+            if (user.id==client.user?.id || user.id == GlobalConstants.RIVKA_ID){
+                message.reply({content: GlobalConstants.WELCOME, files:[GlobalConstants.WELCOME_IMAGE]})
             }
         });
     }

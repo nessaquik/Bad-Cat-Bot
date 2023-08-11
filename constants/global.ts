@@ -6,5 +6,7 @@ export abstract class GlobalConstants {
     static readonly ID_SEPARATOR = '_'
     static readonly Permissions = PermissionFlagsBits.ModerateMembers
     static readonly NOT_THE_DM = "AYO! You are SO NOT the DM!"
-    static readonly WELCOME = "Shhhhhhhhhhhh...........You'll wake The Others!"
+    static readonly WELCOME = "If you're looking for Rivka, you're shit out of luck kid!\n Want to see a really cool pre-baby instead?"
+    static readonly WELCOME_IMAGE = "https://cdn.discordapp.com/attachments/1070790206283841757/1139417162444972062/image.png"
+    static readonly RIVKA_ID = "943458535155572826"
 }
