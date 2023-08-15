@@ -58,7 +58,7 @@ export async function sendGameEmbed(channel: TextChannel,
         role: role,
         channel: gameChannel ? gameChannel.toString() : CreateGameEmbedConstants.UNAVAILABLE,
         acceptedUserCount: 0,
-        aboutDMMessage: aboutDMURL,
+        aboutDMMessage: aboutDMURL ? "["+CreateGameEmbedConstants.ABOUT_DM_MESSAGE+"]("+aboutDMURL+")" : CreateGameEmbedConstants.UNAVAILABLE,
         discussionThreadUrl: threadURL,
     }
 
@@ -105,7 +105,7 @@ function buildEmbed(embedDetails: GameEmbedDetails){
         { name: CreateGameEmbedConstants.DM, value: embedDetails.dm },
         { name: CreateGameEmbedConstants.GAME_DETAILS, value: embedDetails.template },
         { name: CreateGameEmbedConstants.APPLICATION, value: embedDetails.questions },
-        { name: CreateGameEmbedConstants.ABOUT_DM, value: embedDetails.aboutDMMessage ? "["+CreateGameEmbedConstants.ABOUT_DM_MESSAGE+"]("+embedDetails.aboutDMMessage+")" : CreateGameEmbedConstants.UNAVAILABLE },
+        { name: CreateGameEmbedConstants.ABOUT_DM, value: embedDetails.aboutDMMessage },
         { name: CreateGameEmbedConstants.THREAD, value: "["+CreateGameEmbedConstants.SEE_DISCUSSION_THREAD+"]("+embedDetails.discussionThreadUrl+")" }];
 
     if (embedDetails.role){
