@@ -29,41 +29,47 @@ client.on('ready', () => {
     console.log('Commands are registered')
 })
 
-client.on('interactionCreate', async (interaction) => {    
-    if (interaction.isChatInputCommand()){
-        try{
-            const slashCommand = Commands.get(interaction.commandName);
-            if (!slashCommand) {
-                interaction.followUp({ content: GlobalConstants.ERROR });
-                return;
-            }
-            await slashCommand.execute(client, interaction);
-        }
-        catch(e){
-            await interaction.reply({
-                content: GlobalConstants.ERROR,
-                ephemeral: true
-            })
-        }
+client.on('interactionCreate', async (interaction) => {
+    if (interaction.isChatInputCommand() || interaction.isButton()){
+        await interaction.reply({
+            content: GlobalConstants.WELCOME,
+            ephemeral: true
+        })
     }
-    else if (interaction.isButton()){
-        try{
-            const id = interaction.customId.split(GlobalConstants.ID_SEPARATOR)[0]
-            const button = Buttons.get(id);
-            if (!button) {
-                interaction.followUp({ content: GlobalConstants.ERROR });
-                return;
-            }
-            await button?.execute(client, interaction)
-        }
-        catch(e){
-            console.error(e)
-            await interaction.reply({
-                content: GlobalConstants.ERROR,
-                ephemeral: true
-            })
-        }
-    }
+    // else if (interaction.isChatInputCommand()){
+    //     try{
+    //         const slashCommand = Commands.get(interaction.commandName);
+    //         if (!slashCommand) {
+    //             interaction.followUp({ content: GlobalConstants.ERROR });
+    //             return;
+    //         }
+    //         await slashCommand.execute(client, interaction);
+    //     }
+    //     catch(e){
+    //         await interaction.reply({
+    //             content: GlobalConstants.ERROR,
+    //             ephemeral: true
+    //         })
+    //     }
+    // }
+    // else if (interaction.isButton()){
+    //     try{
+    //         const id = interaction.customId.split(GlobalConstants.ID_SEPARATOR)[0]
+    //         const button = Buttons.get(id);
+    //         if (!button) {
+    //             interaction.followUp({ content: GlobalConstants.ERROR });
+    //             return;
+    //         }
+    //         await button?.execute(client, interaction)
+    //     }
+    //     catch(e){
+    //         console.error(e)
+    //         await interaction.reply({
+    //             content: GlobalConstants.ERROR,
+    //             ephemeral: true
+    //         })
+    //     }
+    // }
     else {
         return
     }    
@@ -73,7 +79,7 @@ client.on(Events.MessageCreate, async (message) => {
     if (message.mentions != null && message.mentions.users != null && !message.author.bot){
         message.mentions.users.forEach(async (user) => {
             if (user.id==client.user?.id || user.id == GlobalConstants.RIVKA_ID){
-                message.reply({content: GlobalConstants.WELCOME, files:[GlobalConstants.WELCOME_IMAGE]})
+                message.reply({content: GlobalConstants.WELCOME})
             }
         });
     }
