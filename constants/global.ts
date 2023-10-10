@@ -6,6 +6,7 @@ export abstract class GlobalConstants {
     static readonly ID_SEPARATOR = '_'
     static readonly Permissions = PermissionFlagsBits.ModerateMembers
     static readonly NOT_THE_DM = "AYO! You are SO NOT the DM!"
-    static readonly WELCOME = "Due to the current situation in Israel, we are using all our computing power to help scan media for missing civilians. Formulate will not be functional for the forseeable future. Consider donating to Magen David Adom or Zaka if you can - https://www.mdais.org/en/donation or https://give.zakaworld.org/ and reach out to cohenkosem if you are in Israel and need assistance (transportation, housing, food, locating a friend/family member or medical help) or a burial certificate."
+    static readonly WELCOME = "If you're looking for Rivka, you're shit out of luck kid!\n Want to see a really cool pre-baby instead?"
+    static readonly WELCOME_IMAGE = "https://cdn.discordapp.com/attachments/1070790206283841757/1139417162444972062/image.png"
     static readonly RIVKA_ID = "943458535155572826"
 }
