@@ -74,7 +74,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                 }                
                 interaction.user.send(ApplyToGameModalConstants.USER_MESSAGE + game.name)
 
-                AddAppCreatedToNotion(interaction.user.username,applicationThreadId)
+                //AddAppCreatedToNotion(interaction.user.username,applicationThreadId)
             }
             catch (e) {
                 console.error(e)

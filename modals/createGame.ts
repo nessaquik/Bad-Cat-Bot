@@ -108,7 +108,7 @@ async function SubmitModal(client: Client, interaction: Interaction, modalId: st
                     channel.send(CreateGameConstants.PROMOTE_CHANNEL_USAGE)
                 }
                                
-                AddGameToNotion(applicationThread.id, name, dm?.username!, gameFormat)
+                //AddGameToNotion(applicationThread.id, name, dm?.username!, gameFormat)
             }
             catch (e) {
                 console.error(e)

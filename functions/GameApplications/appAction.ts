@@ -44,7 +44,7 @@ export async function applicationAction_NEW(client: Client,
             await sendAcknowledgement(user, game.name, interaction, action) 
             await postActionApplicationEmbed(action, interaction.message) 
             await changeAcceptedUserCount(gameEmbed, action)              
-            LogToNotion(user, interaction, action)
+            //LogToNotion(user, interaction, action)
         }
 }
 
@@ -96,7 +96,7 @@ async function LogToNotion(user: User,
     interaction: ButtonInteraction,
     action: ApplicationAction){
         if (action == ApplicationAction.Accept){
-            AddAppAcceptedToNotion(user.username, interaction.channelId)
+            //AddAppAcceptedToNotion(user.username, interaction.channelId)
         }    
 }
 
@@ -119,6 +119,6 @@ export async function applicationAction_LEGACY(client: Client,
             await postActionApplicationEmbed(action, interaction.message)                                    
             await incrementAcceptedCount(interaction.channel!, messageId)
             await sendAcknowledgement(user, game.gameName, interaction, action)            
-            LogToNotion(user, interaction, action)
+            //LogToNotion(user, interaction, action)
         }
 }
