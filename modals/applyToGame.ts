@@ -4,7 +4,7 @@ import { GlobalConstants } from "../constants/global";
 import { gameApplicationEmbed } from "../functions/GameApplications/appEmbed";
 import { Modal } from "./_modal";
 import { Guid } from "guid-typescript";
-import { AddAppCreatedToNotion } from "../notion/applicationCreated";
+//import { AddAppCreatedToNotion } from "../notion/applicationCreated";
 import { GameEmbedDetails, getEmbedDetails } from "../functions/CreateGame/gameEmbed";
 
 async function GetModal(client: Client, interaction: Interaction, id?: string) {

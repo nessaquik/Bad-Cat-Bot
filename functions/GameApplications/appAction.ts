@@ -2,7 +2,7 @@ import { ButtonInteraction, Client, User, Message, TextChannel } from 'discord.j
 import { AcceptApplicationButtonConstants, RejectApplicationButtonConstants, RemovePlayerButtonConstants } from "../../constants/gameApplication";
 import { GlobalConstants } from "../../constants/global";
 import { GameDetails, getGameDetailsFromThread, incrementAcceptedCount } from "../gameDetails";
-import { AddAppAcceptedToNotion } from '../../notion/applicationAccepted';
+//import { AddAppAcceptedToNotion } from '../../notion/applicationAccepted';
 import { isDM_LEGACY, addRoleToUser, isDMorUser_LEGACY, removeRoleFromUser, ApplicationAction, isDMorUser, isDM } from '../_Base/commonMethods';
 import { getApplicationAuthorId, postActionApplicationEmbed } from './appEmbed';
 import { GameEmbedDetails, changeAcceptedCount, getEmbedDetails } from '../CreateGame/gameEmbed';

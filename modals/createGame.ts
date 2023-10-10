@@ -3,7 +3,7 @@ import { CreateGameConstants, CreateGameModalConstants } from "../constants/crea
 import { CreateGameTemplate, CREATE_GAME_APPLICATION, GAME_DETAILS_SEPARATOR } from "../constants/createGameDescription";
 import { GlobalConstants } from "../constants/global";
 import { createDiscussionThread, createApplicationThread, getGameFormat, getAboutDMMessage } from "../functions/CreateGame/gameBase";
-import { AddGameToNotion } from "../notion/gameCreated";
+//import { AddGameToNotion } from "../notion/gameCreated";
 import { Modal } from "./_modal";
 import { createGameLocation } from "../functions/CreateGame/gameLocation";
 import { sendGameEmbed } from "../functions/CreateGame/gameEmbed";
